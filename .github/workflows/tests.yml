@@ -66,6 +66,7 @@ jobs:
         ps aux && curl -v 127.0.0.1:8080/api/v2/
         mkdir -p reports/
         xvfb-run npm run protractor-coverage --unsafe-perm | tee >(ts -s "%H:%M:%.S" > reports/timed-protractor.log)
+        exit ${PIPESTATUS[0]}
     - name: Archive E2E test artifacts
       uses: actions/upload-artifact@v3
       if: always()
