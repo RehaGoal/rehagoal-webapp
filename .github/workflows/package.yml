@@ -57,7 +57,7 @@ jobs:
       env:
         ANDROID_HOME: /opt/android
         ANDROID_SDK_ROOT: /opt/android
-        CI_PIPELINE_IID: ${{ github.run_id }}
+        CI_PIPELINE_IID: ${{ github.run_number }}
         CI_BUILD_REF_NAME: ${{ github.ref_name }}
       run: |
         source "$HOME/.sdkman/bin/sdkman-init.sh"
