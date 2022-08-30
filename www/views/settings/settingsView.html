@@ -1,0 +1,189 @@
+<div class="container">
+    <h1>Einstellungen</h1>
+    <hr>
+    <div id="settings-tts">
+        <div class="toggle-switch-wrapper">
+            <toggle-switch id-checkbox="chkTTSEnabled" model="$ctrl.ttsEnabled"></toggle-switch>
+            <label for="chkTTSEnabled">Sprachausgabe</label>
+        </div>
+        <div class="row" ng-show="$ctrl.ttsEnabled">
+            <div id="slider" class="col-xs-5">
+                <input id="sliderTTSSpeed" type="range" min="1" max="5" step="1" ng-model="$ctrl.ttsSpeed">
+            </div>
+            <div id="ttsSampleDiv">
+                <button id="ttsSample" ng-click="$ctrl.audioSample()">Anhören</button>
+            </div>
+        </div>
+        <label for="sliderTTSSpeed" ng-show="$ctrl.ttsEnabled">Geschwindigkeit der Sprachausgabe:
+            {{$ctrl.ttsSpeed * 33 + 1}}%</label>
+    </div>
+    <hr>
+    <div id="settings-executionView">
+        <label for="selectExecutionViewLayout">Ausführungsansicht:</label>
+        <select id="selectExecutionViewLayout" ng-model="$ctrl.executionViewLayout">
+            <option value="default">Standard-Ansicht</option>
+            <option value="flex">Flexible Ansicht</option>
+        </select>
+        <span ng-if="$ctrl.executionViewLayout == 'flex'">
+            <label for="selectExecutionViewAlignment">Inhaltsausrichtung:</label>
+            <select id="selectExecutionViewAlignment" ng-model="$ctrl.executionViewFlexContentAlignment">
+                <option value="right">Rechts</option>
+                <option value="left">Links</option>
+            </select>
+        </span>
+    </div>
+    <div id="settings-calendar">
+        <label for="selectCalendarStaticPostponeDelay">Kalenderereignisse verschieben um:</label>
+        <select id="selectCalendarStaticPostponeDelay" ng-model="$ctrl.calendarStaticPostponeDelay"
+                ng-options="option.value as option.label for option in $ctrl.calendarStaticPostponeDelayOptions">
+        </select>
+    </div>
+    <div id="settings-web-notifications">
+        <label for="buttonWebNotificationEnable">Web Notifications:</label>
+        <button ng-if="$ctrl.webNotificationsState === 'default'" ng-click="$ctrl.requestWebNotificationPermissions()"
+                id="buttonWebNotificationEnable">Web Notifications aktivieren</button>
+        <span ng-if="$ctrl.webNotificationsState === 'granted'">erlaubt</span>
+        <span class="has-error" ng-if="$ctrl.webNotificationsState === 'denied'">❌ verweigert</span>
+        <span class="has-error" ng-if="$ctrl.webNotificationsState === 'unsupported'">❌ nicht unterstützt</span>
+    </div>
+    <hr>
+
+    <div id="settings-cordova" ng-if="$ctrl.showCordovaSettings">
+        <div class="toggle-switch-wrapper">
+            <toggle-switch id-checkbox="chkWearEnabled" model="$ctrl.wearCompanionEnabled"></toggle-switch>
+            <label for="chkWearEnabled">Android Wear anbinden</label>
+        </div>
+
+        <div class="toggle-switch-wrapper">
+            <toggle-switch id-checkbox="chkBTEnabled" model="$ctrl.bluetoothCompanionEnabled"></toggle-switch>
+            <label for="chkBTEnabled">BluetoothCompanion</label>
+        </div>
+        <hr>
+    </div>
+
+    <div id="settings-flowEditView" class="toggle-switch-wrapper">
+        <toggle-switch id-checkbox="chkImageResizeEnabled" model="$ctrl.imageResizeEnabled"></toggle-switch>
+        <label for="chkImageResizeEnabled">Bilder automatisch verkleinern<br/>
+            <small>(größer als {{$ctrl.imageResizeMaxWidth}}&times;{{$ctrl.imageResizeMaxHeight}} &amp; {{$ctrl.imageResizeMaxFileSize | bytes2}})</small>
+        </label>
+    </div>
+    <hr>
+    <div id="settings-gamification">
+        <div class="toggle-switch-wrapper">
+            <toggle-switch id-checkbox="chkGamificationEnabled" model="$ctrl.gamificationEnabled"></toggle-switch>
+            <label for="chkGamificationEnabled">Gamification</label>
+        </div>
+        <div ng-show="$ctrl.gamificationEnabled">
+            <label for="gamificationSettings">Einstellungen für Gamification:</label>
+            <a id="gamificationSettings" href="#!/gamification-settings" class="btn btn-default btn-sm">Anpassen</a>
+        </div>
+    </div>
+
+    <div id="settings-study-participate" ng-if="!$ctrl.studyModeEnabled">
+        <hr>
+        <h4>Studienteilname</h4>
+        <div id="settings-studyReference">
+            <form name="settingsStudyReferenceForm">
+                <div class="form-group"
+                     ng-class="{ 'has-error' : settingsStudyReferenceForm.textStudyReference.$invalid}">
+                    <label for="studySelect">Name der Studie: </label>
+                    <select id="studySelect" required ng-model="$ctrl.studyNameSelected">
+                        <option ng-repeat="entry in $ctrl.studyNames" ng-value="entry">{{entry}}</option>
+                    </select>
+                    <br/>
+                    <label for="textStudyReference">Zugangsschl&uumlssel: </label>
+                    <input id="textStudyReference" name="textStudyReference" type="password" required
+                           ng-model="$ctrl.studyReferenceKey"/>
+                    <p ng-show="settingsStudyReferenceForm.textStudyReference.$error.required && !settingsStudyReferenceForm.textStudyReference.$pristine"
+                       class="help-block">
+                        Bitte den Zugangsschl&uumlssel eingeben.</p>
+                    <p ng-show="settingsStudyReferenceForm.studySelect.$error.required" class="help-block">
+                        Bitte eine Studie auswaehlen.</p>
+                    <div id="settings-study-reference-validation" ng-if="$ctrl.isStudyReferenceBeingValidated()">
+                        <p>Bitte warten... Zugangsschl&uumlssel wird gepr&uuml;ft.</p>
+                        <progress></progress>
+                    </div>
+                    <div ng-if="$ctrl.studyErrorMessage">
+                        <span class="help-block" aria-hidden="true">Fehler: {{$ctrl.studyErrorMessage}}</span>
+                    </div>
+                </div>
+                <button ng-click="$ctrl.initStudyReference()" ng-disabled="settingsStudyReferenceForm.$invalid">an Studie teilnehmen</button>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <div id="settings-version">
+        <label for="branch">Branch: </label>
+        <p id="branch">{{$ctrl.gitBranchInfo}}</p>
+        <label for="commit">Commit: </label>
+        <p id="commit">{{$ctrl.gitCommitInfo}}</p>
+        <label for="browser">Browser: </label>
+        <p id="browser">{{$ctrl.browserInfo}}</p>
+        <label for="platform">Platform: </label>
+        <p id="platform">{{$ctrl.platform}}@{{$ctrl.OSInfo}}</p>
+    </div>
+    <hr>
+    <div id="settings-quota">
+        <label for="quota-usage">Speicherplatzbelegung: </label><br/>
+        <quota-usage-bar id="quota-usage"></quota-usage-bar>
+    </div>
+    <div id="settings-study-dump" ng-if="$ctrl.studyModeEnabled">
+        <hr>
+        <h4>Studie</h4>
+        <div id="settings-studyMode">
+            <p>Achtung: Es werden f&uumlr die Studie <b>{{$ctrl.studyNameSelected}}</b> Nutzungsdaten erfasst und aufgezeichnet</p>
+        </div>
+        <div id="settings-study-not-initialized" ng-if="!$ctrl.studyInitialized && !$ctrl.isStudyInitializing()">
+            <form name="settingsInitForm">
+                <div class="form-group" ng-class="{ 'has-error' : settingsInitForm.passPrivateKey.$invalid}">
+                    <label for="passPrivateKey">Passwort: </label>
+                    <input id="passPrivateKey" name="passPrivateKey" type="password" required ng-minlength="8"
+                           equals="{{$ctrl.studyPasswordRepeat}}"
+                           ng-model="$ctrl.studyPassword"/>
+                    <p ng-show="settingsInitForm.passPrivateKey.$error.required && !settingsInitForm.passPrivateKey.$pristine"
+                       class="help-block">
+                        Bitte Passwort eingeben.</p>
+                    <p ng-show="settingsInitForm.passPrivateKey.$error.minlength && !settingsInitForm.passPrivateKey.$error.required"
+                       class="help-block">Das Passwort muss min. 8 Zeichen lang sein.</p>
+                    <p ng-show="settingsInitForm.passPrivateKey.$error.equals && !settingsInitForm.passPrivateKey.$error.required"
+                       class="help-block">Beide Passwörter müssen übereinstimmen.</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : settingsInitForm.passPrivateKeyRepeat.$invalid}">
+                    <label for="passPrivateKeyRepeat">Passwort wiederholen: </label>
+                    <input id="passPrivateKeyRepeat" name="passPrivateKeyRepeat" type="password" required
+                           equals="{{$ctrl.studyPassword}}"
+                           ng-model="$ctrl.studyPasswordRepeat"/>
+                    <p ng-show="settingsInitForm.passPrivateKeyRepeat.$error.required && !settingsInitForm.passPrivateKeyRepeat.$pristine"
+                       class="help-block">
+                        Bitte Passwort eingeben.</p>
+                    <p ng-show="settingsInitForm.passPrivateKeyRepeat.$error.equals && !settingsInitForm.passPrivateKeyRepeat.$error.required"
+                       class="help-block">Beide Passwörter müssen übereinstimmen.</p>
+                </div>
+                <button ng-click="$ctrl.initStudy()" ng-disabled="loginForm.$invalid">Studiendaten initialisieren</button>
+            </form>
+        </div>
+        <div id="settings-study-initializing" ng-if="$ctrl.isStudyInitializing()">
+            <p>Bitte warten... Schlüsselpaar wird generiert.</p>
+            <progress></progress>
+        </div>
+        <div id="settings-study-initialized" ng-if="$ctrl.studyInitialized">
+            <label for="pseudonym">Pseudonym: </label>
+            <p id="pseudonym">{{$ctrl.pseudonym}}</p>
+            <button ng-click="$ctrl.exportPublicKey()">Public Key exportieren</button>
+            <br/>
+            <label for="passPrivateKey">Passwort: </label>
+            <input id="passPrivateKey" name="passPrivateKey" type="password"
+                   ng-model="$ctrl.studyPassword"/>
+            <div ng-if="$ctrl.exportInProgress">
+                Export läuft...<br/>
+                <progress value="{{$ctrl.exportProgressValue}}" max="1"></progress>
+            </div>
+            <div ng-if="!$ctrl.exportInProgress">
+                <button ng-click="$ctrl.exportStudyData()">Studiendaten exportieren</button>
+            </div>
+            <div ng-if="$ctrl.studyErrorMessage">
+                <span class="help-block" aria-hidden="true">Fehler: {{$ctrl.studyErrorMessage}}</span>
+            </div>
+        </div>
+    </div>
+</div>

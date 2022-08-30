@@ -1,0 +1,19 @@
+<script type="text/ng-template" id="serverExportTooltip.html">
+    <span>{{$ctrl.getServerExportStatus()}}</span>
+    <button ng-click="$ctrl.showPopover = false"
+            style="float:right;" type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <br /><br />
+    <qrcode size="200" data="{{$ctrl.serverExportUrl}}" ng-if="$ctrl.serverExportUrl"></qrcode><br /><br />
+    <a style="word-wrap: break-word;" ng-href="{{$ctrl.serverExportUrl}}" ng-if="$ctrl.serverExportUrl" target="_blank">{{$ctrl.serverExportUrl}}</a>
+</script>
+<button title="Server Export" type="button" class="btn btn-sm btn-default"
+        ng-click="$ctrl.exportSelectedWorkflowsToServer()"
+        uib-popover-template="'serverExportTooltip.html'"
+        popover-placement="bottom"
+        popover-trigger="'none'"
+        popover-title="Server Export URL"
+        popover-is-open="$ctrl.showPopover">
+    <span class="glyphicon glyphicon-export"></span>{{$ctrl.buttonText}}
+</button>

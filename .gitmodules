@@ -1,0 +1,3 @@
+[submodule "ci/rehagoal-server"]
+	path = ci/rehagoal-server
+	url = https://github.com/RehaGoal/rehagoal-server.git

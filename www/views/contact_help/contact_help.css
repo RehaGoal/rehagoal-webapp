@@ -1,0 +1,53 @@
+/**Contact Side**/
+.address{
+    padding-top:1em;
+}
+.logo-sm {
+    height: 3em;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+.about h3{
+    font-size: 1.3em;
+}
+
+.about h4{
+    font-size: 1.1em;
+    padding-top: 0.7em;
+    padding-bottom: 0.5em;
+}
+
+.about .row{
+    margin-top: 0.5em;
+}
+
+/**Help Page **/
+.gallery {
+    padding: 0;
+}
+
+.gallery li {
+    display: inline-block;
+    margin: 0 1em 1em 0;
+    list-style-type: none;
+    text-align: center;
+}
+.gallery1 img {
+    height: 4em;
+}
+.previewBox {
+    margin-top: 3em;
+}
+
+.lightbox-image-caption {
+    color: #515151;
+    border-width: 1px;
+    text-shadow: none;
+}
+.lightbox-image-caption span{
+    padding: 0.2em;
+}
+.lightbox-nav .btn-default {
+    font-size: 10pt;
+    margin-right: 0;
+}

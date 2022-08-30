@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "module": "none", //"commonjs",
+    "target": "es6",
+    "rootDir": "www",
+    "outDir": "www",
+    "sourceMap": true,
+    "inlineSources": true,
+    "removeComments": false,
+    "strict": true,
+    "newLine": "LF",
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": [
+    "node_modules/@types/**/*.d.ts",
+    "www/**/*.ts",
+    "www/components/database/dexie.d.ts",
+    "node_modules/jasmine2-custom-message/jasmine2-custom-message.d.ts"
+  ],
+  "exclude": [
+    "www/bower_components/dexie/**/*.ts",
+    "www/bower_components/qrcode-generator/**/*.ts",
+    "www/bower_components/reflect-metadata/Reflect.ts",
+    "tmp/**/*",
+    "node_modules/@types/angular/angular-component-router.d.ts",
+    "node_modules/@types/jquery/index.d.ts",
+    "node_modules/@types/node/**",
+    "node_modules/@types/koa/**",
+    "node_modules/@types/koa-compose/**",
+    "www/components/crypto/worker/crypto.worker.ts"
+  ],
+  "references": [
+  ]
+}

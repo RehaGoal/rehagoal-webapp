@@ -1,0 +1,62 @@
+<div class="container">
+    <info-modal></info-modal>
+    <h1>Terminplanung</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div style="display: inline-block">
+                <label for="planDate">Datum: </label>
+                <input style="width: 9em" id="planDate" type="date" min="{{$ctrl.minDateISOString}}" ng-model="$ctrl.selectedDate">
+            </div>
+            <div style="display: inline-block">
+                <label for="planTime">Uhrzeit: </label>
+                <input style="width: 5em" id="planTime" type="time" min="{{$ctrl.minTimeString}}" ng-model="$ctrl.selectedTime"
+                    ng-model-options="{'timezone': 'UTC'}">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- col-md-5 * 2 -->
+        <list-builder
+                all-items="$ctrl.workflows"
+                selected-items="$ctrl.selectedWorkflows"
+                all-items-title="Verfügbare Aufgaben"
+                selected-items-title="Geplante Aufgaben"
+                no-items-selected-warning="Es wurden noch keine Workflows ausgewählt!"
+                all-items-order-by="id">
+            <item-display>{{$parent.item.name}}</item-display>
+        </list-builder>
+    </div>
+    <div class="row">
+        <button ng-click="$ctrl.addEvent()">Termin speichern</button>
+    </div>
+    <div class="row">
+        <div ng-if="$ctrl.plannedEvents.length === 0">
+            Keine geplanten Termine.
+        </div>
+        <div id="plannedEvents" ng-if="$ctrl.plannedEvents.length > 0">
+            <br />
+            Bereits geplante Termine:
+            <table class="planned-events-table">
+                <tr>
+                    <th></th>
+                    <th>Datum</th>
+                    <th>Workflows</th>
+                </tr>
+                <tr ng-repeat="plannedEvent in $ctrl.plannedEvents | orderBy:'date' track by $index">
+                    <td>
+                        <a class="btn btn-xs btn-default glyphicon glyphicon-remove"
+                           ng-click="$ctrl.removeEvent(plannedEvent)"></a>
+                    </td>
+                    <td>{{plannedEvent.date.toLocaleString()}}</td>
+                    <td>
+                        <ul>
+                            <li ng-repeat="workflow in $ctrl.getWorkflowsForIds(plannedEvent.workflowIDs) track by $index">
+                                {{workflow.name}}
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+toggle-switch {
+    --switch-width: 3.75em;
+    --switch-height: 2.125em;
+    --slider-margin: 0.25em;
+    --slider-size: calc(var(--switch-height) - 2 * var(--slider-margin));
+    /* used from bootstrap btn-success */
+    --enabled-bg-color: #5cb85c;
+    --disabled-bg-color: #ccc;
+    --slider-color-enabled: white;
+    --input-focus-glim-color: #449d44;
+    --transition-time: .4s;
+
+    line-height: 0;
+}
+
+/* The switch - the box around the slider */
+.toggle-switch-outer {
+    position: relative;
+    display: inline-block;
+    width: var(--switch-width);
+    height: var(--switch-height);
+    pointer-events: none;
+}
+
+/* Hide default HTML checkbox */
+.toggle-switch-outer input {
+    opacity: 0;
+    width: var(--switch-width);
+    height: var(--switch-height);
+    pointer-events: all;
+    margin-top: 0;
+}
+
+/* The slider */
+.toggle-switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--disabled-bg-color);
+    -webkit-transition-duration: var(--transition-time);
+    transition-duration: var(--transition-time);
+}
+
+.toggle-switch-slider:before {
+    position: absolute;
+    content: "";
+    height: var(--slider-size);
+    width: var(--slider-size);
+    left: calc((var(--switch-height) - var(--slider-size)) / 2);
+    bottom: calc((var(--switch-height) - var(--slider-size)) / 2);
+    background-color: var(--slider-color);
+    -webkit-transition: var(--transition-time);
+    transition: var(--transition-time);
+}
+
+/* used from btn-success */
+input:checked + .toggle-switch-slider {
+    background-color: var(--enabled-bg-color);
+}
+
+input:focus + .toggle-switch-slider {
+    box-shadow: 0 0 1px var(--input-focus-glim-color);
+}
+
+input:checked + .toggle-switch-slider:before {
+    --translation-width: calc(var(--switch-width) - (var(--slider-size) + 2 * var(--slider-margin)));
+    -webkit-transform: translateX(var(--translation-width));
+    -ms-transform: translateX(var(--translation-width));
+    transform: translateX(var(--translation-width));
+}
+
+/* Rounded sliders */
+.toggle-switch-slider.toggle-switch-round {
+    border-radius: var(--switch-height);
+}
+
+.toggle-switch-slider.toggle-switch-round:before {
+    border-radius: 50%;
+}
+
+toggle-switch .enabled {
+    --slider-color: var(--slider-color-enabled);
+}
+
+toggle-switch .disabled {
+    --slider-color: lightgrey;
+}

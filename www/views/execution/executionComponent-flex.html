@@ -1,0 +1,39 @@
+<div style="height: 100%; display: flex; flex-direction: column">
+    <execution-block
+            style="flex: 1"
+            id="current-block"
+            current="true"
+            flex="true"
+            content-align="$ctrl.contentAlign"
+            text="$ctrl.getCurrentBlockText()"
+            image-hash="$ctrl.getCurrentBlockImageHash()"
+            additional-text="$ctrl.getCurrentBlockAdditionalText()"
+            button-skip="$ctrl.getCurrentBlockSkipable()"
+            button-yes="$ctrl.getCurrentBlockShowCondition()"
+            button-no="$ctrl.getCurrentBlockShowCondition()"
+            button-check="$ctrl.getCurrentBlockShowCheck()"
+            on-click-check="$ctrl.selectCheck(event)"
+            on-click-yes="$ctrl.selectYes"
+            on-click-no="$ctrl.selectNo"
+            on-click-skip="$ctrl.selectSkip"
+            on-click-label="$ctrl.selectLabel()"
+            button-disabled="$ctrl.getCurrentButtonDisabled()"
+            current-block-index="$ctrl.getCurrentBlockIndex()"
+            ng-if="!$ctrl.isCurrentParallelBlock()">
+    </execution-block>
+    <execution-block-parallel
+            id="current-block-parallel"
+            flex="true"
+            content-align="$ctrl.contentAlign"
+            style="flex: 1"
+            text="$ctrl.getCurrentBlockText()"
+            image-hash="$ctrl.getCurrentBlockImageHash()"
+            num-tasks-todo="$ctrl.getParallelTaskNumTodo()"
+            num-tasks-remain="$ctrl.getParallelTaskNumRemain()"
+            flows="$ctrl.getCurrentParallelFlows()"
+            on-click-title="$ctrl.selectParallelTitle"
+            on-click-mini-label="$ctrl.selectParallelMiniLabel"
+            current-block-index="$ctrl.getCurrentBlockIndex()"
+            ng-if="$ctrl.isCurrentParallelBlock()">
+    </execution-block-parallel>
+</div>

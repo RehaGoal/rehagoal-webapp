@@ -1,0 +1,37 @@
+<h1 class="swap-container" ng-class="{'mini-task': $ctrl.miniTask}">
+    <span class="swap-cell swap-animation tasklabel label label-primary"
+          ng-animate-swap="$ctrl.currentBlockIndex" ng-click="$ctrl.onClickLabel()" ng-class="{ 'greyed-out': !$ctrl.current, 'label-primary': $ctrl.current}">
+        <span class="execution-block-text">
+            {{$ctrl.text}}
+        </span>
+        <div ng-show="$ctrl.imageUrl">
+            <img ng-click="$ctrl.openLightbox()" ng-load="$ctrl.onImageLoaded({$event: $event})" ng-src="{{$ctrl.imageUrl}}" class="execution-block-image">
+        </div>
+        <!--ng-disabled: WEB-11206-->
+        <span ng-hide="$ctrl.additionalText">
+            <button
+                    type="button" class="btn btn-info" ng-show="$ctrl.buttonCheck" ng-click="$ctrl.onClickCheck({event: $event})"
+                    ng-disabled="$ctrl.buttonDisabled">
+                <span class="glyphicon glyphicon-ok"></span>
+            </button>
+            <button
+                    type="button" class="btn btn-info" ng-show="$ctrl.buttonYes" ng-click="$ctrl.onClickYes($event)"
+                    ng-disabled="$ctrl.buttonDisabled">
+                Ja
+            </button>
+            <button type="button"
+                    class="btn btn-default"
+                    ng-show="$ctrl.buttonNo"
+                    ng-click="$ctrl.onClickNo($event)"
+                    ng-disabled="$ctrl.buttonDisabled">
+                Nein
+            </button>
+        </span>
+        <span ng-show="$ctrl.additionalText">
+            {{$ctrl.additionalText}}
+        </span>
+        <button type="button" class="btn btn-info" title="&Uuml;berspringen" ng-show="$ctrl.buttonSkip" ng-click="$ctrl.onClickSkip($event)">
+            <span class="glyphicon glyphicon-fast-forward"></span>
+        </button>
+    </span>
+</h1>

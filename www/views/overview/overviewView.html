@@ -1,0 +1,104 @@
+<info-modal title="$ctrl.infoTitle" text="$ctrl.infoText" modal-enabled="$ctrl.modalEnabled"></info-modal>
+<prompt-modal title="$ctrl.promptTitle"
+              text-label="$ctrl.promptLabel"
+              text-accept="$ctrl.promptAccept"
+              text-cancel="$ctrl.promptCancel"
+              on-confirm="$ctrl.importWorkflowsFromServer(input)"
+              show-text-box="true"></prompt-modal>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <h1>Workflow-Übersicht</h1>
+
+            <overview-toolbar class="visible-md visible-lg visible-xl"
+                              text-new-workflow="Neuer Workflow"
+                              text-workflow-import="Datei Import"
+                              text-server-import="Server Import"
+                              text-export-selection="Datei Export"
+                              text-server-export="Server Export"
+                              text-delete-selection="Auswahl löschen"
+                              text-filter-workflows="Workflows filtern nach:"
+                              workflow-filter="q"></overview-toolbar>
+            <overview-toolbar class="visible-sm"
+                              text-new-workflow="Neu"
+                              text-workflow-import="Datei"
+                              text-server-import="Server"
+                              text-export-selection="Datei"
+                              text-server-export="Server"
+                              text-delete-selection="Löschen"
+                              text-filter-workflows="Filter:"
+                              workflow-filter="q"></overview-toolbar>
+            <overview-toolbar class="visible-xs"
+                              text-new-workflow=""
+                              text-workflow-import=""
+                              text-server-import="Server"
+                              text-export-selection=""
+                              text-server-export="Server"
+                              text-delete-selection=""
+                              text-filter-workflows="Filter:"
+                              workflow-filter="q"></overview-toolbar>
+        </div>
+    </div>
+
+    <progress-bar class="visible-sm visible-xs" bar-width="100" get-progress="$ctrl.getProgressBarStatus" update-event="$ctrl.importProgressUpdateEvent"></progress-bar>
+    <progress-bar class="hidden-sm hidden-xs" bar-width="50" get-progress="$ctrl.getProgressBarStatus" update-event="$ctrl.importProgressUpdateEvent"></progress-bar>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="overview-table"> <!-- table -->
+                <div class="overview-table-row" ng-hide="$ctrl.workflows.length === 0 || results.length === 0"> <!-- thead row -->
+                    <div>
+                        <input title="Select All" type="checkbox" ng-model="$ctrl.workflowSelectAll"
+                               ng-change="$ctrl.toggleSelectAll()"/>
+                    </div>
+                    <div>
+                        <label title="Alle auswählen" class="label-input-label"> Alle auswählen</label>
+                    </div>
+                    <div id="select-delete">
+                        <div class="visible-xs visible-sm">
+                            <a title="Ausgewählte Workflows löschen" href="#" class="btn btn-sm btn-danger" ng-click="$ctrl.deleteSelectedWorkflows($event)">
+                                <span class="glyphicon glyphicon-trash"></span> Workflows
+                            </a>
+                        </div>
+                        <div class="visible-md visible-lg visible-xl">
+                            <a title="Ausgewählte Workflows löschen" href="#" class="btn btn-sm btn-danger" ng-click="$ctrl.deleteSelectedWorkflows($event)">
+                                <span class="glyphicon glyphicon-trash"></span> Workflows löschen
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="overview-table-row" ng-repeat="workflow in $ctrl.workflows | orderBy:$ctrl.workflowOrderType | filter:q as results track by workflow.id"> <!-- tbody rows -->
+                    <div>
+                        <input title="Select" type="checkbox" ng-model="$ctrl.workflowSelection.ids[workflow.id]"
+                               ng-change="$ctrl.updateWorkflowSelectAll()"/>
+                    </div>
+
+                    <div ng-class="{'overview-table-workflow-name': !renameBtnForm.$visible,
+                                    'workflow-name-wrap': $ctrl.lastClickedWorkflow === workflow}"
+                         ng-style="{'grid-column': renameBtnForm.$visible ? 'span 2' : 'auto'}">
+                        <i editable-text="workflow.name" e-form="renameBtnForm"
+                           onbeforesave="$ctrl.beforeRename(workflow)"
+                           onaftersave="$ctrl.renameWorkflow(workflow)"
+                           ng-click="$ctrl.handleWorkflowNameClicked(workflow)"
+                           speak-contents>{{workflow.name}}
+                        </i>
+                    </div>
+
+
+                    <div ng-if="!renameBtnForm.$visible">
+                        <workflow-menu-strip workflow="workflow" rename-btn-form="renameBtnForm"></workflow-menu-strip>
+                    </div>
+                </div>
+                <div class="overview-table-row" ng-if="results.length === 0">
+                    <div style="grid-column: 1 / -1">
+                        <div class="alert alert-warning" role="alert">
+                            Es wurden keine Workflows gefunden!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

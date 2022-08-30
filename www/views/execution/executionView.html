@@ -1,0 +1,15 @@
+<leave-modal text="Sie sind dabei die Ausführung abzubrechen! <br />Wirklich verlassen?" modal-enabled="$ctrl.leaveModalEnabled" on-cancel="$ctrl.onCancelLeave"></leave-modal>
+<info-modal title="$ctrl.infoModalTitle" text="$ctrl.infoModalText" modal-enabled="true" on-confirm="$ctrl.onNotificationConfirm()"></info-modal>
+<div class="col-md-12" style="height: 100%">
+    <execution-component
+            flex="$ctrl.isFlexViewEnabled()"
+            content-align="$ctrl.getFlexContentAlignment()"
+            workflow="$ctrl.workflow"
+            tts-enabled="true"
+            scroll-to-current="true"
+            on-workflow-finish-click="$ctrl.onWorkflowFinishClick()"
+            on-workflow-finish="$ctrl.onWorkflowFinish()"
+            on-notification="$ctrl.onNotification(title, text)"
+            execution-paused="$ctrl.executionPaused">
+    </execution-component>
+</div>

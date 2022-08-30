@@ -1,0 +1,39 @@
+<div class="container">
+    <h1>Gamification Übersicht</h1>
+
+    <div class="headline-settings-container">
+        <h3>Punkte &amp; Level</h3>
+        <div id="gamification-settings-link" class="h2">
+            <a href="#!/gamification-settings" data-toggle="collapse" data-target=".navbar-collapse.in">
+                <span class="glyphicon glyphicon-cog"></span></a>
+        </div>
+    </div>
+    <hr>
+
+    <div id="dashboard-stats">
+        <div ng-if="!$ctrl.pointsDisplay">
+            <p> Hier würden die <b>Punkte</b> und das <b>Level</b> angezeigt werden, aber diese sind <b>ausgeblendet</b>.</p>
+        </div>
+
+        <div id="dashboard-stats-content" ng-if="$ctrl.pointsDisplay">
+            <label for="dashboard-points">Punkte:</label>
+            <p id="dashboard-points">{{ $ctrl.loaded ? $ctrl.points : "..." }}</p>
+
+            <label for="dashboard-level">Level:</label>
+            <p id="dashboard-level">{{ $ctrl.loaded ? $ctrl.level : "..." }}</p>
+
+            <label for="dashboard-progress">Fortschritt:</label>
+            <p id="dashboard-progress" ng-if="!$ctrl.loaded">...</p>
+
+            <uib-progressbar id="dashboard-progress" ng-if="$ctrl.loaded" class="gamification-progress"
+                             max="1" value="$ctrl.getCurrentProgress()">
+            </uib-progressbar>
+        </div>
+
+        <div ng-if="!$ctrl.pointsRecording && $ctrl.pointsDisplay">
+            <label for="dashboard-points-recording-disabled-hint">Hinweis: </label>
+            <p id="dashboard-points-recording-disabled-hint" class="text-info">Es werden aktuell keine neuen Punkte aufgezeichnet.</p>
+        </div>
+    </div>
+    <hr>
+</div>

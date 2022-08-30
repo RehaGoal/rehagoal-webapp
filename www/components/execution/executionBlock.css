@@ -1,0 +1,270 @@
+.execution-block-text {
+    display: block;
+    white-space: normal;
+    min-height: 2em;
+    max-height: 3em;
+    overflow: auto;
+    width: 100%;
+    font-size: 0.74em;
+    line-height: 1.2;
+
+}
+
+.swap-container {
+    min-height: 100px;
+    position:relative;
+    display: block;
+    overflow:hidden;
+}
+.swap-container .swap-cell {
+    text-align:center;
+    padding:0.5em;
+   /*position:absolute;*/
+    top:0;
+    left:0;
+    right:0;
+    /*height:100px;*/
+}
+
+/*.swap-animation.ng-enter, .swap-animation.ng-leave {
+    transition:0.2s linear all;
+}
+.swap-animation.ng-enter {
+    top:100px;
+}
+.swap-animation.ng-enter-active {
+    top:0;
+}
+.swap-animation.ng-leave {
+    top:0;
+}
+.swap-animation.ng-leave-active {
+    top:-100px;
+}
+*/
+.swap-animation.ng-enter, .swap-animation.ng-leave {
+    transition: 200ms cubic-bezier(0.215, 0.610, 0.355, 1.000) all;
+}
+#current-block .swap-animation.ng-enter {
+    opacity: 0;
+}
+#current-block .swap-animation.ng-enter-active {
+    opacity: 1;
+}
+#current-block .swap-animation.ng-leave {
+    opacity: 1;
+}
+#current-block .swap-animation.ng-leave-active {
+    opacity: 0;
+}
+
+#previous-block .swap-animation.ng-enter, #next-block .swap-animation.ng-enter  {
+    opacity: 0;
+}
+#previous-block .swap-animation.ng-enter-active, #next-block .swap-animation.ng-enter-active {
+    opacity: 0.7;
+}
+#previous-block .swap-animation.ng-leave, #next-block .swap-animation.ng-leave {
+    opacity: 0.7;
+}
+#previous-block .swap-animation.ng-leave-active, #next-block .swap-animation.ng-leave-active {
+    opacity: 0;
+}
+
+.tasklabel {
+    display:inline-block;
+    width:100%;
+    min-height: 100px;
+    padding: 0.5em;
+    /*overflow: auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;*/
+}
+
+.headerlabel {
+    font-size: 1em;
+    min-height: 1.5em;
+    max-height: 3.5em;
+    overflow: auto;
+    white-space: normal;
+    text-align: left;
+}
+
+span.greyed-out {
+    opacity: 0.7;
+}
+
+.mini-task {
+    width: 250px;
+    margin-top: 6px;
+    margin-bottom: 0;
+    font-size: 1.5em;
+}
+
+.mini-task .execution-block-text {
+    min-height: 2em;
+}
+
+/* Flex execution layout */
+
+.flex-2col {
+    flex-basis: 50%;
+}
+
+.flex-2col .mini-task {
+    width: auto;
+}
+
+.execution-block-flex {
+    height: 100%;
+    display: flex;
+    flex-direction: column-reverse
+}
+
+.execution-block-parallel-flex {
+    height: 100%;
+    display: flex;
+    flex-direction: column-reverse
+}
+
+.execution-block-flex-bottom.panel-body {
+    margin: 0;
+    padding: 10px;
+    min-height: 80px;
+    position: relative
+}
+
+.execution-block-title .execution-block-text {
+    max-height: 3.5em;
+}
+
+.text-left-side {
+    padding-right: 50%;
+    text-align: left;
+}
+
+.text-right-side {
+    padding-left: 50%;
+    text-align: right;
+}
+
+.execution-block-parallel-flex .tasklabel,
+.execution-block-flex .tasklabel {
+    display: flex;
+    flex-flow: column;
+}
+
+.execution-block-parallel-flex .mini-task .btn-info {
+    font-size: 1.5em;
+    width: 3em;
+}
+
+.execution-block-flex-bottom.panel-body .btn {
+    width: 4em;
+    font-size: 2em;
+}
+
+.execution-block-parallel-flex .btn-primary,
+.execution-block-parallel-flex .btn-info {
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.execution-block-additional-text {
+    font-size: 1.2em;
+}
+
+.execution-block-flex-bottom .execution-block-text {
+    margin: auto;
+    font-size: 1.2em;
+    min-height: 2.5em;
+}
+
+.execution-block-parallel-flex .mini-task .execution-block-text {
+    order: 3;
+    margin-top: 10px;
+    min-height: 1.2em;
+}
+
+.execution-block-flex-button-top {
+    margin-right: 0;
+    position: absolute;
+    bottom: 180px;
+}
+
+.execution-block-flex-button-bottom {
+    margin-right: 0;
+    position: absolute;
+    bottom: 110px;
+}
+
+.execution-block-flex-image {
+    flex: 1;
+    text-align: center;
+    background: no-repeat center;
+    background-size: contain;
+    width: 100%;
+    height: auto;
+    min-height: 200px
+}
+
+.execution-block-flex-image-left {
+    background-position-x: 10%;
+}
+
+.execution-block-flex-image-right {
+    background-position-x: 90%;
+}
+
+.execution-block-flex-button-left {
+    left: 0;
+}
+
+.execution-block-flex-button-right {
+    right: 0;
+}
+
+/* End flex execution layout */
+
+
+.flex-container {
+    list-style: none;
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+    margin: 0;
+}
+
+.nowrap  {
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}
+
+.wrap    {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.flex-item {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+.execution-text {
+    display: block;
+    white-space: normal;
+    min-height: 2em;
+    max-height: 2.3em;
+    overflow: auto;
+    width: 100%;
+    font-size: 0.85em; !important;
+}
+.execution-block-image {
+    height: auto;
+    max-height: 350px;
+    max-width: 100%;
+    cursor: pointer;
+}

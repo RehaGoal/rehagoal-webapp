@@ -1,0 +1,54 @@
+#calendar-event-bar-overlay {
+    position: fixed;
+    width: 100%;
+    height: fit-content;
+    max-height: 210px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+    background-color: transparent;
+    z-index: 1031;
+    overflow: auto;
+    mask-image: linear-gradient(rgb(0, 0, 0) 0%, rgb(0, 0, 0) 85%, transparent);
+    -webkit-mask-image: linear-gradient(rgb(0, 0, 0) 0%, rgb(0, 0, 0) 85%, transparent);
+    scrollbar-width: thin;
+}
+#calendar-event-bar-overlay .panel {
+    margin-bottom: 0px;
+}
+.calendar-event-bar-workflow-name {
+    min-width: 0;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.calendar-event-bar-row {
+    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: -5px;
+}
+.calendar-event-bar-row > * {
+    margin-top: 5px;
+}
+.calendar-event-bar-event-description {
+    display: inline-flex;
+    justify-content: flex-start;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.calendar-event-bar-button-group {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.calendar-event-bar-row .btn-group .btn-danger {
+    margin: 0;
+    font-size: 14px;
+}

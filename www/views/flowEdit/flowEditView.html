@@ -1,0 +1,154 @@
+<leave-modal text="Nicht gespeicherte Daten gehen verloren!<br/>Wirklich verlassen?" modal-enabled="$ctrl.leaveModalEnabled()">
+</leave-modal>
+
+<prompt-modal title="$ctrl.promptModalTitle"
+              text-label="$ctrl.promptModalLabel"
+              text-accept="$ctrl.promptModalAccept"
+              text-cancel="$ctrl.promptModalCancel"
+              on-confirm="$ctrl.confirmModal(input)"
+              on-cancel="$ctrl.cancelModal()"
+              show-text-box="$ctrl.modalShowTextBox"></prompt-modal>
+<script type="text/ng-template" id="pasteBlocklyPreviewTooltip.html">
+    <img ng-if="$ctrl.blocklyClipboardPreviewImageUrl" ng-src="{{$ctrl.blocklyClipboardPreviewImageUrl}}" alt="Blockly Clipboard Preview" style="width: 240px"/>
+</script>
+
+<div id="headerAlert" class="centeredAlert alert" role="alert" ng-click="$ctrl.showAlertSave=false" ng-show="$ctrl.showAlertSave" ng-class="$ctrl.alertIsWarning ? 'alert-warning' : 'alert-success'">
+    <strong>{{$ctrl.alertMessageSave}}</strong>
+</div>
+
+<div>
+    <div class="row">
+        <div id="mySidenav" class="sidenav" ng-class="$ctrl.previewOpen ? 'sidenav-open': 'sidenav-hide'">
+            <div id="previewAlert" class="alert alert-info sidenavAlert" role="alert" ng-show="$ctrl.showAlertPreview">
+                <strong>{{$ctrl.alertMessagePreview}}</strong>
+            </div>
+
+            <button id="previewClose" class="closebtn" ng-show="$ctrl.previewOpen" ng-click="$ctrl.closePreview()">&times;</button>
+            <div id="preview-execution">
+                <execution-component workflow="$ctrl.workflow"
+                                     on-workflow-finish-click="$ctrl.reloadPreview()"
+                                     on-workflow-finish=""
+                                     on-notification="$ctrl.onPreviewNotification(title, text)"
+                                     execution-paused="!$ctrl.previewOpen"
+                                     metrics-disabled="true"
+                                     gamification-disabled="true"
+                                     sleep-skipable="true"
+                                     hide-log="true">
+                </execution-component>
+            </div>
+        </div>
+        <div id="main-edit" ng-class="$ctrl.mainEditClass">
+            <h1>Workflow Editor: {{$ctrl.workflow.name}}</h1>
+
+            <div class="flow-edit-button-bar">
+                <div class="flow-edit-button-bar-group">
+                    <button  type="button" class="btn btn-sm btn-default workflow-btn" ng-click="$ctrl.togglePreview()">
+                        <span class="glyphicon glyphicon-menu-left"></span>
+                        <span class="glyphicon glyphicon-film"></span>
+                        Vorschau
+                    </button>
+                </div>
+                <div class="flow-edit-button-bar-group">
+                    <button type="button" class="btn btn-sm btn-default workflow-btn" ng-click="$ctrl.saveWorkspace()"
+                            uib-tooltip="Speichern für aktuelle Vorschau"
+                            tooltip-is-open="$ctrl.previewOpen && $ctrl.workspaceHasChanged()"
+                            tooltip-enable="$ctrl.previewOpen && $ctrl.workspaceHasChanged()"
+                            tooltip-placement="bottom"
+                            tooltip-popup-delay="200">
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                        Speichern
+                    </button>
+
+                    <a type="button"  class="btn btn-sm btn-default workflow-btn"
+                       href="#!/start/{{$ctrl.workflow.id}}">
+                        <span class="glyphicon glyphicon-play"></span> Workflow starten
+                    </a>
+                </div>
+                <div class="flow-edit-button-bar-group">
+                    <button class="btn btn-sm btn-default workflow-btn" ng-disabled="$ctrl.copyInProgress" ng-click="$ctrl.copyGlobally()">
+                        <span class="glyphicon glyphicon-copy"></span> Kopieren
+                    </button>
+
+                    <button class="btn btn-sm btn-default workflow-btn" ng-click="$ctrl.pasteGlobally()"
+                            uib-tooltip="Alter Inhalt gelöscht"
+                            tooltip-is-open="$ctrl.showClipboardExpiryTooltip"
+                            tooltip-enable="$ctrl.showClipboardExpiryTooltip"
+                            tooltip-trigger="'none'"
+                            uib-popover-template="'pasteBlocklyPreviewTooltip.html'"
+                            popover-placement="bottom"
+                            popover-trigger="'mouseenter'"
+                            popover-title="Vorschau"
+                            ng-mouseenter="$ctrl.updateBlocklyClipboardPreview()">
+                        <span class="glyphicon glyphicon-paste"></span> Einfügen
+                    </button>
+
+                    <button type="button" class="btn btn-sm btn-default workflow-btn" ng-disabled="!$ctrl.undoAvailable" ng-click="$ctrl.undoBlockly()">
+                        <span class="glyphicon glyphicon-share-alt icon-flipped-x"></span>
+                        R&uuml;ckg&auml;ngig
+                    </button>
+                    <button type="button" class="btn btn-sm btn-default workflow-btn" ng-disabled="!$ctrl.redoAvailable" ng-click="$ctrl.redoBlockly()">
+                        <span class="glyphicon glyphicon-share-alt"></span>
+                        Wiederholen
+                    </button>
+                </div>
+                <div class="flow-edit-button-bar-group">
+                    <button type="button" class="btn btn-sm btn-default workflow-btn" ng-click="$ctrl.toggleImageSelection()">
+                        <span class="glyphicon glyphicon-picture"></span> Bilder verwalten
+                        <span class="glyphicon glyphicon-menu-right"></span>
+                    </button>
+                </div>
+            </div>
+
+            <blockly ng-if="$ctrl.loadBlockly" disable-orphans="true" workspace="$ctrl.workspace" on-change="$ctrl.onBlocklyChange(event)"
+                     block-saturation="0.45" block-value="0.68"></blockly>
+
+            <div ng-hide="$ctrl.loadBlockly">
+                <h2><i>Umgebung wird geladen, bitte warten ...</i></h2>
+            </div>
+
+        </div>
+        <div id="image-selection-container" ng-class="$ctrl.imageSelectionActive ? 'col-image-open' : 'col-image-hide'">
+            <button id="imageSelectionClose" class="closebtn" ng-click="$ctrl.toggleImageSelection()">&times;</button>
+            <h2>Bilder verwalten</h2>
+
+            <h4>Neues Bild</h4>
+            <label id="imageFileUpload" title="Dateibrowser für Bildwahl" class="custom-file-upload"
+                   ng-click="$ctrl.resetUploadedImage()"
+                   for="inputImageFile">
+                <div class="label-btn btn btn-sm btn-default">
+                    <span class="glyphicon glyphicon-open-file"></span> Bild auswählen
+                </div>
+            </label>
+            <!-- TODO set reasonable ng-model -->
+            <!--  only here since ng-upload tries to write error into model and crahses otherwise -->
+            <input style="display:none" id="inputImageFile" type="file" ngf-select="$ctrl.uploadNewImage($file)"
+                   ng-model="todo"
+                   ngf-model-invalid="$ctrl.invalidImages"
+                   ngf-resize="{width: {{$ctrl.imageResizeMaxWidth}}, height: {{$ctrl.imageResizeMaxHeight}}, quality: .8, type: 'image/jpeg'}"
+                   ngf-resize-if="$ctrl.shouldResizeImage($file, $width, $height)"
+                   accept="image/*" />
+            <p ng-if="$ctrl.invalidImages" id="imageUploadError" class="bg-danger">Achtung: Das hochgeladene Bild ist fehlerhaft!</p>
+            <img id="imageUploadPreview" ng-show="!$ctrl.isEmptyOrFaultyImageUploaded()" ng-src="{{$ctrl.uploadedImageUrl}}" alt="" />
+            <br />
+            <em>Name: </em><input id="filename" type="text" ng-model="$ctrl.filename" />
+            <button id="saveImage" title="Bild mit Namen speichern" class="btn btn-sm btn-default" ng-click="$ctrl.storeImageAs($ctrl.filename,false)" ng-disabled="$ctrl.isEmptyOrFaultyImageUploaded()"><span class="glyphicon glyphicon-floppy-save"></span> Bild speichern</button>
+            <!-- TODO TEST div changes here -->
+            <div id="sizeWarnings" ng-if="$ctrl.shouldShowImageSizeWarning()">
+                <p ng-if="$ctrl.isImageResizeEnabled()" id="sizeWarningResizeEnabled" class="bg-warning">Achtung: Das Bild ist groß! Es wird automatisch verkleinert und die Qualität nimmt ab.</p>
+                <p ng-if="!$ctrl.isImageResizeEnabled()" id="sizeWarningResizeDisabled" class="bg-warning">Achtung: Das Bild ist groß! Dies kann die Leistung der Anwendung beeinträchtigen.</p>
+
+            </div>
+            <hr />
+            <h4>Vorschau</h4>
+            <select id="imageSelect" ng-model="$ctrl.previewImageName" ng-change="$ctrl.updateImageUrl()" ng-disabled="!$ctrl.imageSelectLoaded">
+                <option ng-repeat="entry in $ctrl.imageNames" ng-value="entry">{{entry}}</option>
+            </select>
+            <br />
+            <div ng-if="$ctrl.previewImageUrl">
+                <img id="imagePreview" ng-click="$ctrl.openPreviewImageLightbox()" ng-src="{{$ctrl.previewImageUrl}}" alt="" />
+            </div>
+            <br />
+            <button id="removeImage" class="btn btn-sm btn-default" ng-click="$ctrl.showRemoveImage()" ng-disabled="!$ctrl.previewImageName"><span class="glyphicon glyphicon-trash"></span> Bild löschen</button> <br/>
+        </div>
+    </div>
+</div>

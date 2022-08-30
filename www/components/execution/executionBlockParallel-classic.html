@@ -1,0 +1,21 @@
+<div class="swap-container panel panel-primary" id="panel-execution-block-parallel">
+    <div class="panel-heading" ng-click="$ctrl.onClickTitle()">
+        <h3 class="panel-title headerlabel tasklabel">{{ $ctrl.numTasksTodo }} von {{ $ctrl.numTasksRemain}}: {{ $ctrl.text }}</h3>
+        <div align="center" ng-show="$ctrl.imageUrl">
+            <img ng-click="$ctrl.openLightbox()" ng-load="$ctrl.onTitleImageLoaded($event)" ng-src="{{$ctrl.imageUrl}}" class="execution-block-image img-thumbnail">
+        </div>
+    </div>
+    <div class="panel-body">
+        <ul style="padding-left: 0;" class="flex-container wrap">
+            <li class="flex-item" ng-repeat="flow in $ctrl.flows">
+                <execution-block text="flow.getCurrent().getText()"
+                                 image-hash="flow.getCurrent().getImageHash()"
+                                 button-yes="false" button-no="false" button-check="true"
+                                 current="true" on-click-check="$ctrl.selectCheck(flow, flow.getCurrent())"
+                                 on-click-label="$ctrl.onClickMiniLabel(flow, flow.getCurrent())"
+                                 on-image-loaded="$ctrl.onMiniImageLoaded($event)"
+                                 mini-task="true" current-block-index="$ctrl.currentBlockIndex"></execution-block>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<button title="Neuen Workflow erstellen" type="button" class="btn btn-sm btn-default"
+        ng-click="$ctrl.overviewCtrl.newWorkflow()">
+    <span class="glyphicon glyphicon-file"></span>
+    {{$ctrl.textNewWorkflow}}
+</button>
+
+<button title="Workflows aus Datei importieren" class="btn btn-sm btn-default"
+       ngf-select="$ctrl.overviewCtrl.importWorkflows($file)" ngf-accept="$ctrl.acceptedJSONTypes">
+    <span class="glyphicon glyphicon-import"></span>{{$ctrl.textWorkflowImport}}
+</button>
+
+<button title="Import von Server" class="btn btn-sm btn-default"
+        ng-click="$ctrl.overviewCtrl.requestServerImportModal()">
+    <span class="glyphicon glyphicon-import"></span>{{$ctrl.textServerImport}}
+</button>
+
+<a title="Auswahl in Datei exportieren" href="#" class="btn btn-sm btn-default"
+   download="{{$ctrl.overviewCtrl.getExportFileName()}}"
+   ng-click="$ctrl.overviewCtrl.exportSelectedWorkflows($event)" ng-href="{{ $ctrl.overviewCtrl.exportUrl }}">
+<span class="glyphicon glyphicon-export"></span>
+    {{$ctrl.textExportSelection}}
+</a>
+<server-export-button button-text="{{$ctrl.textServerExport}}"
+                      workflow-selection="$ctrl.overviewCtrl.workflowSelection"></server-export-button>
+
+<div class="searchForWorkflow">
+    <div class="dropdown pull-left">
+        {{$ctrl.textFilterWorkflows}} <input type="search" ng-model="$ctrl.workflowFilter" placeholder="suchen..."
+                                             aria-label="search"/>
+
+        <button title="Workflows sortieren" class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdown-sort-workflow"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span class="glyphicon glyphicon-sort"></span>
+        </button>
+        <ul class="dropdown-menu pull-right" style="min-width: 0" aria-labelledby="dropdown-sort-workflow">
+            <li>
+                <a id="dropdown-sort-workflow-created-asc" ng-click="$ctrl.overviewCtrl.workflowOrderType = 'id'"> Erstellt: aufsteigend </a>
+            </li>
+            <li>
+                <a id="dropdown-sort-workflow-created-desc" ng-click="$ctrl.overviewCtrl.workflowOrderType = '-id'"> Erstellt: absteigend</a>
+            </li>
+            <li>
+                <a id="dropdown-sort-workflow-name-asc" ng-click="$ctrl.overviewCtrl.workflowOrderType = 'name'"> Name: aufsteigend</a>
+            </li>
+            <li>
+                <a id="dropdown-sort-workflow-name-desc" ng-click="$ctrl.overviewCtrl.workflowOrderType = '-name'"> Name: absteigend</a>
+            </li>
+        </ul>
+    </div>
+</div>

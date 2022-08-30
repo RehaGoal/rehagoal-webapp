@@ -1,0 +1,87 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <!--<h2 style="float:right;"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> {{$ctrl.nextTimerTime}} s</h2>-->
+            <h1>Workflow Ausführung: <em>{{$ctrl.workflow.name}}</em></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div ng-class="$ctrl.hideLog ? 'col-md-12' : 'col-md-8'">
+            <h3 id="headline-executed-workflow">{{$ctrl.goalDescription}}</h3>
+            <!-- insert tasks here ... -->
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <execution-block
+                            id="previous-block"
+                            current="false"
+                            flex="false"
+                            text="$ctrl.getPreviousBlockText()"
+                            button-yes="$ctrl.getPreviousBlockShowYes()"
+                            button-no="$ctrl.getPreviousBlockShowNo()"
+                            button-check="$ctrl.getPreviousBlockShowCheck()"
+                            button-disabled="true"
+                            current-block-index="$ctrl.getCurrentBlockIndex()">
+                    </execution-block>
+                    <execution-block
+                            id="current-block"
+                            current="true"
+                            flex="false"
+                            text="$ctrl.getCurrentBlockText()"
+                            image-hash="$ctrl.getCurrentBlockImageHash()"
+                            additional-text="$ctrl.getCurrentBlockAdditionalText()"
+                            button-yes="$ctrl.getCurrentBlockShowCondition()"
+                            button-no="$ctrl.getCurrentBlockShowCondition()"
+                            button-check="$ctrl.getCurrentBlockShowCheck()"
+                            button-skip="$ctrl.getCurrentBlockSkipable()"
+                            on-click-check="$ctrl.selectCheck(event)"
+                            on-click-yes="$ctrl.selectYes"
+                            on-click-no="$ctrl.selectNo"
+                            on-click-label="$ctrl.selectLabel()"
+                            on-click-skip="$ctrl.selectSkip"
+                            on-image-loaded="$ctrl.onCurrentBlockImageLoaded()"
+                            button-disabled="$ctrl.getCurrentButtonDisabled()"
+                            current-block-index="$ctrl.getCurrentBlockIndex()"
+                            scroll-into-view-event="scrollToCurrentBlock"
+                            scroll-into-view-disabled="!$ctrl.scrollToCurrent"
+                            scroll-into-view-offset="-54"
+                            on-animate="$ctrl.onAnimateEnter(eventName, phase)"
+                            on-animate-events="enter"
+                            ng-if="!$ctrl.isCurrentParallelBlock()">
+                    </execution-block>
+                    <execution-block-parallel
+                            id="current-block-parallel"
+                            text="$ctrl.getCurrentBlockText()"
+                            image-hash="$ctrl.getCurrentBlockImageHash()"
+                            num-tasks-todo="$ctrl.getParallelTaskNumTodo()"
+                            num-tasks-remain="$ctrl.getParallelTaskNumRemain()"
+                            flows="$ctrl.getCurrentParallelFlows()"
+                            on-click-title="$ctrl.selectParallelTitle"
+                            on-click-mini-label="$ctrl.selectParallelMiniLabel"
+                            current-block-index="$ctrl.getCurrentBlockIndex()"
+                            on-image-loaded="$ctrl.onCurrentBlockImageLoaded()"
+                            scroll-into-view-event="scrollToCurrentBlock"
+                            scroll-into-view-disabled="!$ctrl.scrollToCurrent"
+                            scroll-into-view-offset="-54"
+                            on-animate="$ctrl.onAnimateEnter(eventName, phase)"
+                            on-animate-events="enter"
+                            ng-if="$ctrl.isCurrentParallelBlock()">
+                    </execution-block-parallel>
+                    <execution-block
+                            id="next-block"
+                            current="false"
+                            flex="false"
+                            text="$ctrl.getNextBlockText()"
+                            button-yes="$ctrl.getNextBlockShowCondition()"
+                            button-no="$ctrl.getNextBlockShowCondition()"
+                            button-check="$ctrl.getNextBlockShowCheck()"
+                            button-disabled="true"
+                            current-block-index="$ctrl.getCurrentBlockIndex()">
+                    </execution-block>
+                </div>
+            </div>
+        </div>
+        <div ng-if="!$ctrl.hideLog" class="col-md-4">
+            <execution-log></execution-log>
+        </div>
+    </div>
+</div>

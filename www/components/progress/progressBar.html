@@ -1,0 +1,7 @@
+<div id="progress-bars" ng-show="$ctrl.getBars().length > 0" style="width: {{$ctrl.barWidth}}%">
+    <uib-progress>
+        <uib-bar ng-repeat="bar in $ctrl.getBars() track by $index" value="(bar.eventsCount / bar.eventsTotal) * (100 / $ctrl.bars.length)" max="(100 / $ctrl.bars.length)" type="{{bar.type}}">
+            <span style="color: white">{{bar.text}}</span>
+        </uib-bar>
+    </uib-progress>
+</div>

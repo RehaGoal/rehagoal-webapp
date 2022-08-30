@@ -1,0 +1,86 @@
+name: RehaGoal webapp CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+        python-version: [3.9]
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install build/test dependencies
+      run: |
+        curl https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add - && apt-add-repository -y 'https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/'
+        apt-get update
+        apt-get install -y graphicsmagick xvfb moreutils adoptopenjdk-8-hotspot
+        curl -LO https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        apt-get install -y ./google-chrome-stable_current_amd64.deb && rm google-chrome-stable_current_amd64.deb
+        npm install -g bower
+        echo '{ "allow_root": true, "interactive": false }' > /root/.bowerrc
+        git config --global url.https://github.com/.insteadOf git://github.com/
+    - name: Install project dependencies
+      run: npm ci --unsafe-perm
+    - name: Run Unit tests (Karma/Jasmine)
+      run: xvfb-run npm run test-single-run -- --no-auto-watch --single-run --reporters=dots,coverage,junit --browsers=Chrome_container_no_sandbox
+    - name: Archive unit test artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: unit-testing-reports
+        path: |
+          reports/unittest
+          reports/coverage/karma
+    - name: Setup Python for API server integration tests
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Run End-to-End (E2E) tests (Protractor)
+      run: |
+        pushd ci/rehagoal-server
+        rm db.sqlite3 || true
+        pip3 install -r requirements.txt
+        python3 manage.py generate_secret_key
+        python3 manage.py migrate
+        echo "Executing make_testuser.py script..."
+        cat ../make_testuser.py
+        python3 manage.py shell < ../make_testuser.py
+        echo "Starting RehaGoal API server..."
+        python3 manage.py runserver 127.0.0.1:8080 &
+        popd && timeout 10 bash -c 'while ! curl http://127.0.0.1:8080 2>/dev/null; do sleep 0.5; done'
+        ps aux && curl -v 127.0.0.1:8080/api/v2/
+        mkdir -p reports/
+        xvfb-run npm run protractor-coverage --unsafe-perm | tee >(ts -s "%H:%M:%.S" > reports/timed-protractor.log)
+    - name: Archive E2E test artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: e2e-testing-reports
+        path: |
+          reports/e2e-junit
+          reports/coverage/protractor
+          reports/timed-protractor.log
+    - name: Generate combined coverage report
+      run: npm run --unsafe-perm combined-coverage-report
+    - name: Archive combined test artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: combined-testing-reports
+        path: |
+          reports/

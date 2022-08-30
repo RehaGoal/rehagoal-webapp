@@ -1,0 +1,85 @@
+name: RehaGoal webapp packaging
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+        cordova-version: [9.0]
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install build dependencies
+      run: |
+        curl https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
+        apt-add-repository -y 'https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/'
+        apt-get update
+        apt-get install -y adoptopenjdk-8-hotspot graphicsmagick wine64 rename
+        curl -s "https://get.sdkman.io" | bash
+        source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk install gradle
+        npm install -g bower
+        echo '{ "allow_root": true, "interactive": false }' > /root/.bowerrc
+        git config --global url.https://github.com/.insteadOf git://github.com/
+    - name: Use Cordova ${{ matrix.cordova-version }}
+      run: npm install -g "cordova@${{ matrix.cordova-version }}"
+    - name: Install Android SDK
+      run: |
+        mkdir -p /opt/android
+        cd /opt/android
+        curl -LO https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
+        unzip sdk-tools-linux-4333796.zip
+        rm sdk-tools-linux-4333796.zip
+        cd tools/bin
+        (yes | ./sdkmanager --licenses) || echo "License accept return: $?"
+    - name: Install Android build-tools, platforms etc.
+      run: |
+        /opt/android/tools/bin/sdkmanager --verbose "platforms;android-28" "build-tools;28.0.3" "sources;android-28" "extras;android;m2repository"
+        (yes | /opt/android/tools/bin/sdkmanager --licenses) || echo "License accept return: $?"
+    - name: Install project dependencies
+      run: npm ci --unsafe-perm
+    - name: Package app
+      env:
+        ANDROID_HOME: /opt/android
+        CI_PIPELINE_IID: ${{ github.run_id }}
+        CI_BUILD_REF_NAME: ${{ github.ref_name }}
+      run: |
+        source "$HOME/.sdkman/bin/sdkman-init.sh"
+        cd deploy
+        bash ./package.sh
+    - name: Archive web app
+      uses: actions/upload-artifact@v3
+      with:
+        name: rehagoal-webapp-web
+        path: |
+          deploy/rehagoal-web-*.zip
+    - name: Archive Electron Win32 app
+      uses: actions/upload-artifact@v3
+      with:
+        name: rehagoal-webapp-win32-x64
+        path: |
+          deploy/electron/rehagoal-webapp-win32-x64-electron-*.zip
+    - name: Archive Electron Linux app
+      uses: actions/upload-artifact@v3
+      with:
+        name: rehagoal-webapp-linux-x64
+        path: |
+          deploy/electron/rehagoal-webapp-linux-x64-electron-*.zip
+    - name: Archive Cordova Android app
+      uses: actions/upload-artifact@v3
+      with:
+        name: rehagoal-webapp-android
+        path: |
+          deploy/rehagoal-android-*.apk

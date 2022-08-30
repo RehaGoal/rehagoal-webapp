@@ -1,0 +1,36 @@
+#!/bin/bash
+
+SUPPORTS_COLORS=0
+if [ -t 1 ]; then
+    N_COLORS=$(tput colors)
+    if [ -n "$N_COLORS" -a $N_COLORS -ge 8 ]; then
+        SUPPORTS_COLORS=1;
+    fi
+fi
+
+echo_error() {
+    if [ $SUPPORTS_COLORS -eq 1 ]; then
+	    echo -e "\e[31m$@\e[0m"
+	else
+	    echo -e "$@"
+	fi
+}
+
+CHANGED_TEST_FILES=$(git diff --cached --name-only | grep -E "(_test\.(js|ts)$)|(^e2e-tests/scenarios.js$)")
+
+grep -E --with-filename --line-number '(fdescribe|fit)\(' $CHANGED_TEST_FILES
+FOCUSED=$?
+grep -E --with-filename --line-number '(xdescribe|xit)\(' $CHANGED_TEST_FILES
+IGNORED=$?
+
+if [ $FOCUSED -eq 0 ]; then
+    echo_error "ERROR: There are focused tests!"
+fi
+
+if [ $IGNORED -eq 0 ]; then
+    echo_error "ERROR: There are ignored tests!"
+fi
+
+if [ $IGNORED -eq 0 -o $FOCUSED -eq 0 ]; then
+    exit 1
+fi

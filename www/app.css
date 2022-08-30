@@ -1,0 +1,214 @@
+/* app css stylesheet */
+
+/*** default elements ***/
+body {
+  font-size: 1.1em;
+}
+
+[ng-view] {
+  height: calc(100vh - 72px);
+}
+
+input {
+  border: 1px solid #AAAAAA;
+  border-radius: 3px;
+}
+
+h1,h2,h3 {
+  color: #757575;
+  font-size: 1.6em;
+  padding-bottom: 0.2em;
+}
+h2{
+  font-size: 1.4em;
+}
+h3 {
+  padding-top: 0.2em;
+  font-size: 1.3em;
+}
+
+hr {
+  margin-top: 1em;
+  margin-bottom: 0;
+}
+
+
+/*** Menu and Navigation ****/
+.navbar-default {
+  background-image: linear-gradient(to bottom, #f9f9f9 10px, #e0e0e0 100%);
+  font-size: 0.95em;
+  position: sticky;
+}
+
+.nav > li > a {
+    padding-left:0.7em;
+}
+
+.menu {
+  list-style-type: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+
+/*** Buttons ***/
+.btn-default{
+  margin-right: 0.8em;
+  font-size: 0.82em ;
+}
+.btn-danger {
+  font-size: 0.82em ;
+}
+
+.btn-primary, .btn-info{
+  margin-right: 0.8em;
+  background-image: linear-gradient(to bottom, #55b662 0px, #3aa03a 100%);
+  border-color: #408440;
+  font-size: 0.82em ;
+}
+@media screen and (max-width: 500px) {
+  .btn-danger, .btn-info, .btn-default, .btn-primary {
+    margin-bottom: 1em;
+    margin-right: 0.5em;
+  }
+}
+
+.btn-primary:hover, .btn-info:hover{
+  background-color: #18a023;
+}
+.btn-primary:active:focus, .btn-info:active:focus {
+  background-color: #097b17;
+}
+.btn-primary.disabled,  .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled].focus{
+  background-color: #42a764 !important;
+}
+
+*::-moz-selection {
+  background: #37a74f none repeat scroll 0 0;
+  text-shadow: none;
+}
+
+/***Custom elements ****/
+.searchForWorkflow {
+  margin-top: 1.5em;
+  margin-bottom: 1.3em;
+}
+
+.overview-table {
+  display: grid;
+  grid-template-columns: 23px auto max-content;
+}
+
+.overview-table > .overview-table-row {
+  display: contents;
+}
+
+.overview-table > .overview-table-row > div {
+  white-space: nowrap;
+  padding: 5px;
+  border-top: 1px solid #dddddd;
+}
+
+.overview-table .overview-table-workflow-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.overview-table .overview-table-workflow-name.workflow-name-wrap {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.overview-table > .overview-table-row:first-child > div {
+  border-top: 0;
+}
+
+@media screen and (max-width: 1199px) {
+  .table .btn-primary {
+    padding-top: 0.4em;
+    padding-bottom: 0.68em;
+  }
+}
+
+.td-error-xl {
+  font-size: 0.9em;
+}
+
+.select-box {
+  margin-right: 0.5em !important;
+}
+
+.warning {
+  padding-left: 1.5em;
+  font-size: 1.1em;
+  color: #c43c32;
+  padding-top:0;
+  padding-bottom: 0;
+}
+
+.dropdown-menu > li > a {
+  font-size: 1.2em;
+}
+
+#select-delete {
+  padding-bottom: 1em !important;
+}
+
+.icon-flipped-x {
+  transform: scaleX(-1);
+  -moz-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  -ms-transform: scaleX(-1);
+}
+
+.navbar .navbar-header button.navbar-toggle {
+  margin-left: 15px;
+}
+
+ul.navbar-nav navbar-gamification {
+  position: relative;
+  top: -15px;
+}
+
+.navbar .visible-xs navbar-gamification {
+  display: block;
+}
+
+.navbar .visible-sm navbar-gamification .navbar-gamification-grid-container {
+  min-height: 0;
+  width: 8em;
+  height: 1em;
+}
+
+.navbar #index-navbar-container-xs > a {
+  display: grid;
+}
+
+.navbar .visible-lg navbar-gamification .navbar-gamification-grid-container,
+.navbar .visible-md navbar-gamification .navbar-gamification-grid-container {
+  min-height: 0;
+  width: 15em;
+  height: 1em;
+}

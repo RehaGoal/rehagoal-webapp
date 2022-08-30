@@ -1,0 +1,53 @@
+<leave-modal text="Sie sind dabei die Ablaufplanung zu verlassen! <br />Möchten Sie fortfahren?" modal-enabled="$ctrl.leaveModalEnabled" on-cancel="$ctrl.onCancelLeave"></leave-modal>
+<info-modal title="$ctrl.infoModalTitle" text="$ctrl.infoModalText" modal-enabled="true" on-confirm="$ctrl.onNotificationConfirm()" ></info-modal>
+
+<div id="schedulingViewLoader" ng-if="!$ctrl.componentInitialized"><h2><i>Umgebung wird geladen, bitte warten ...</i></h2></div>
+<div ng-if="$ctrl.componentInitialized" style="height: 100%;">
+    <div class="container">
+        <div class="row" ng-hide="$ctrl.isSchedulerRunning()" style="height: 100%;">
+            <div class="col-md-12 schedulingOverview">
+                <h1>Ablaufplanung</h1>
+
+
+                <list-builder
+                        all-items="$ctrl.workflows"
+                        selected-items="$ctrl.scheduledWorkflows"
+                        all-items-title="Verfügbare Aufgaben"
+                        all-items-first="false"
+                        selected-items-title="Liste der heutigen Aufgaben"
+                        no-items-selected-warning="Es wurden noch keine Workflows ausgewählt!"
+                        all-items-order-by="id"
+                        on-item-add="$ctrl.onBeforeAddWorkflow">
+                    <item-display>{{$parent.item.name}}</item-display>
+                    <selected-items-footer>
+                        <div ng-hide="$ctrl.scheduledWorkflows.length === 0">
+                            <button type="button" class="btn btn-sm btn-primary" ng-click="$ctrl.startScheduler()">
+                                Ablauf starten
+                            </button>
+                        </div>
+                    </selected-items-footer>
+                </list-builder>
+            </div>
+        </div>
+    </div>
+    <div ng-show="$ctrl.isSchedulerRunning()" class="col-md-12 schedulingExecution" ng-style="{'height': $ctrl.isFlexViewEnabled() ? '100%' : 'auto'}">
+        <execution-component
+                ng-if="$ctrl.isSchedulerRunning()"
+                flex="$ctrl.isFlexViewEnabled()"
+                content-align="$ctrl.getFlexContentAlignment()"
+                workflow="$ctrl.activeWorkflow || undefined"
+                on-workflow-finish-click="$ctrl.nextSchedule()"
+                on-workflow-finish="$ctrl.onWorkflowFinish()"
+                on-notification="$ctrl.onNotification(title, text)"
+                tts-enabled="true"
+                scroll-to-current="true"
+                execution-paused="$ctrl.executionPaused"></execution-component>
+        <div class="container">
+            <div class="row">
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="$ctrl.stopScheduler()">Abbrechen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

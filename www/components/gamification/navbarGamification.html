@@ -1,0 +1,26 @@
+<div ng-if="!$ctrl.loaded">...</div>
+<div ng-if="$ctrl.loaded" class="navbar-gamification-grid-container">
+    <div class="progress-container">
+        <uib-progressbar class="gamification-progress" max="$ctrl.getProgressBarMax()" ng-style="{'opacity':$ctrl.getProgressOpacity()}" type="{{$ctrl.getCurrentColor()}}" value="$ctrl.getProgressBarValue()"></uib-progressbar>
+        <div class="points-animation-container">
+            <div class="points-animation-element" ng-repeat="(key, value) in $ctrl.addedPoints"
+                 on-animate="$ctrl.onPointsAnimation(key, phase, visible)"
+                 on-animate-events="enter"
+                 on-animate-phases="start close"
+                 on-animate-restart="$ctrl.onPointsAnimationRestart(key)">{{value}}</div>
+        </div>
+    </div>
+    <div style="position: relative">
+        <div class="level-container">
+            <div class="confetti-container" style="--confetti-color: {{$ctrl.getCurrentColor()}}" ng-class="{'animate-confetti': $ctrl.animatingConfetti}"></div>
+            <div class="gamification-icon-wrapper">
+                <svg class="gamification-level" ng-class="{'animated-level-up': $ctrl.animatingLevelUp}"
+                     on-animate="$ctrl.levelUpAnimationEnded()" on-animate-events="addClass" on-animate-phases="close">
+                    <use href="{{$ctrl.icon.imageSrc}}" ng-class="$ctrl.getIconClass()"/>
+                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
+                          class="icon-text" font-size="1.2em">{{$ctrl.shownLevel}}</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>

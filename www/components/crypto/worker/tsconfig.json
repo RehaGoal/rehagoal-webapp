@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "module": "none",
+    "target": "es6",
+    "lib": ["es6", "webworker"],
+    "sourceMap": true
+  },
+  "include": [
+    ".",
+    "../cryptoFunctions.d.ts",
+    "../cryptoShared.d.ts"
+  ]
+}

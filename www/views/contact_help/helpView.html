@@ -1,0 +1,100 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <h1>Hilfebereich</h1>
+            <p>
+                Die RehaGoal App hilft im Alltag Arbeitsabläufe zu strukturieren und eine Ablaufplanung zu erstellen.
+                Ein Workflow stellt eine Reihe von zusammenhängenden Aufgaben dar, die nacheinander angezeigt und erledigt werden.
+            </p>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Übersicht</h3>
+            <p>In der Übersicht finden Sie alle Ihre Workflows in einer Liste.
+                Diese können gestartet, bearbeitet, umbenannt oder gelöscht werden.
+            </p>
+            <p> Neue Workflows können angelegt, bestehende Workflows importiert oder exportiert sowie eine Sicherung
+                aller Workflows erstellt werden.
+            </p>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-5 previewBox" ng-controller="GalleryController as galleryCtrl">
+            <ul class="gallery gallery1" >
+                <li ng-repeat="image in galleryCtrl.imagesOverview">
+                    <a ng-click="galleryCtrl.openLightboxOverview($index)">
+                        <img ng-src="{{image.thumbUrl}}" class="img-thumbnail">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Bearbeiten eines Workflows</h3>
+            <p>Ein Workflow unterteilt sich in Unteraufgaben. Es gibt je nach Ablauf verschiedene Aufgabenblöcke zur Auswahl.
+            </p>
+            <p> Neue Aufgabenblöcke können mit der Maus hineingezogen und bearbeitet werden. Mit Strg + C können Blöcke kopiert
+                und verschoben werden.
+            </p>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-5 previewBox" ng-controller="GalleryController as galleryCtrl">
+            <ul class="gallery gallery1" >
+                <li ng-repeat="image in galleryCtrl.imagesEditView">
+                    <a ng-click="galleryCtrl.openLightboxEditView($index)">
+                        <img ng-src="{{image.thumbUrl}}" class="img-thumbnail">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <hr/>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Ausführen eines Workflows</h3>
+            <p> Beim Starten werden alle Teilaufgaben geladen und nacheinander angezeigt.
+            </p>
+            <p> Durch Bestätigen der Ja-, Nein- und OK-Buttons kann zum nächsten Schritt übergegangen werden.
+            </p>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-5 previewBox" ng-controller="GalleryController as galleryCtrl">
+            <ul class="gallery gallery1" >
+                <li ng-repeat="image in galleryCtrl.imagesExecutionView">
+                    <a ng-click="galleryCtrl.openLightboxExecutionView($index)">
+                        <img ng-src="{{image.thumbUrl}}" class="img-thumbnail">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Ablaufplanung</h3>
+            <p> In der Ablaufplanung wählen Sie beliebige Workflows aus, die hintereinander angezeigt werden.
+            </p>
+            <p> Durch Klicken auf die Workflows in der rechten Liste werden diese der Ablaufplanung für den Tag hinzugefügt.
+                Durch Klicken auf die bereits ausgewählten Workflows in der linken Liste werden diese wieder entfernt.
+            </p>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-5 previewBox" ng-controller="GalleryController as galleryCtrl">
+            <ul class="gallery gallery1" >
+                <li ng-repeat="image in galleryCtrl.imagesSchedulingView">
+                    <a ng-click="galleryCtrl.openLightboxSchedulingView($index)">
+                        <img ng-src="{{image.thumbUrl}}" class="img-thumbnail">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br>
+    <hr/>
+    <br>
+    <contact-view></contact-view>
+</div>

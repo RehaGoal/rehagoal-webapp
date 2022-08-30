@@ -1,0 +1,29 @@
+<div class="container">
+    <h1>Gamification Einstellungen</h1>
+    <h3>Punkte &amp; Level</h3>
+    <hr>
+    <div id="points-settings" class="points-settings-grid-container">
+        <div>
+            <h4>Beschreibung:</h4>
+            <p>Durch das Beenden von Aufgaben und Workflows sammelst du Punkte.</p>
+            <p>Bei ausreichend Punkten steigst du ein Level auf.</p>
+            <p>Gespeichert wird nur deine aktuelle Punktzahl und dein Level.</p>
+        </div>
+        <div id="style-preview">
+            <h4>Vorschau:</h4>
+            <navbar-gamification></navbar-gamification>
+        </div>
+        <div class="right-buttons-grid">
+            <label for="pointsRecording">Punkte sammeln: </label>
+            <toggle-switch id-checkbox="pointsRecording" model="$ctrl.pointsRecording" ng-disabled="$ctrl.pointsRecordingSetterInProgress"></toggle-switch>
+
+            <label for="pointsDisplay">Punkte &amp; Level anzeigen: </label>
+            <toggle-switch id-checkbox="pointsDisplay" model="$ctrl.pointsDisplay" ng-disabled="$ctrl.pointsDisplaySetterInProgress"></toggle-switch>
+        </div>
+    </div>
+
+    <hr>
+    <h4>Symbol:</h4>
+    <image-thumbnail-chooser model="$ctrl.selectedIconStyle" named-images="$ctrl.iconStyleArray" disabled="$ctrl.iconStyleSetterInProgress" ng-click="$ctrl.setIconStyle()"></image-thumbnail-chooser>
+</div>
+

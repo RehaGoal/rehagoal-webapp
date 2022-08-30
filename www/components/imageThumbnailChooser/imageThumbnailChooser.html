@@ -1,0 +1,5 @@
+<div class="image-thumbnail-chooser-grid" role="radiogroup">
+    <div class="thumbnail" ng-repeat="img in $ctrl.namedImages" role="radio" aria-checked="{{$ctrl.isImgSelected(img)}}" ng-class="{disabled: $ctrl.disabled}" ng-click="$ctrl.onImageClicked(img)">
+        <img ng-src="{{img.imageSrc}}" title="{{img.name}}" alt="{{img.name}}">
+    </div>
+</div>

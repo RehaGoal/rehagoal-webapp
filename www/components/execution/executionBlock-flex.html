@@ -1,0 +1,56 @@
+<div class="execution-block-flex" style="">
+    <div class="execution-block-flex-bottom panel-body tasklabel label label-primary"
+         style=""
+         ng-click="$ctrl.onClickLabel()">
+        <div class="execution-block-text"
+             ng-class="$ctrl.contentAlign == 'left' ? 'text-left-side' : 'text-right-side'">
+            {{$ctrl.text}}
+        </div>
+        <div class="execution-block-additional-text"
+             ng-class="$ctrl.contentAlign == 'left' ? 'text-left-side' : 'text-right-side'"
+             ng-show="$ctrl.additionalText">
+            {{$ctrl.additionalText}}
+        </div>
+        <div ng-hide="$ctrl.additionalText">
+            <button
+                    type="button" class="btn btn-info
+                    execution-block-flex-button-bottom"
+                    ng-class="$ctrl.contentAlign == 'left' ? 'execution-block-flex-button-left' : 'execution-block-flex-button-right'"
+                    ng-show="$ctrl.buttonCheck"
+                    ng-click="$ctrl.onClickCheck({event: $event})"
+                    ng-disabled="$ctrl.buttonDisabled">
+                <span class="glyphicon glyphicon-ok"></span>
+            </button>
+            <button
+                type="button" class="btn btn-info
+                execution-block-flex-button-top"
+                ng-class="$ctrl.contentAlign == 'left' ? 'execution-block-flex-button-left' : 'execution-block-flex-button-right'"
+                ng-show="$ctrl.buttonYes" ng-click="$ctrl.onClickYes($event)"
+                ng-disabled="$ctrl.buttonDisabled">
+                Ja
+            </button>
+            <button type="button"
+                    class="btn btn-default
+                    execution-block-flex-button-bottom"
+                    ng-class="$ctrl.contentAlign == 'left' ? 'execution-block-flex-button-left' : 'execution-block-flex-button-right'"
+                    ng-show="$ctrl.buttonNo"
+                    ng-click="$ctrl.onClickNo($event)"
+                    ng-disabled="$ctrl.buttonDisabled">
+                Nein
+            </button>
+        </div>
+        <button type="button"
+                class="btn btn-info execution-block-flex-button-bottom"
+                title="&Uuml;berspringen"
+                ng-class="$ctrl.contentAlign == 'left' ? 'execution-block-flex-button-left' : 'execution-block-flex-button-right'"
+                ng-show="$ctrl.buttonSkip"
+                ng-click="$ctrl.onClickSkip($event)">
+            <span class="glyphicon glyphicon-fast-forward"></span>
+        </button>
+    </div>
+    <div ng-show="$ctrl.imageUrl"
+         class="execution-block-flex-image"
+         ng-style="{'background-image': 'url('+$ctrl.imageUrl+')'}"
+         ng-class="$ctrl.contentAlign == 'left' ? 'execution-block-flex-image-left' : 'execution-block-flex-image-right'">
+    </div>
+</div>

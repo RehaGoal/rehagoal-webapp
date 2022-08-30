@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <button ng-click="$ctrl.closeModal()" style="float:right;" type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title" id="modal-title"><span class="glyphicon glyphicon-user"></span> Login Menü</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div ng-if="$ctrl.isUserLoggedIn()">
+        <p> Sie sind angemeldet.</p>
+        <div align="right">
+            <button type="submit" class="btn btn-danger" ng-click="$ctrl.onLogout()" >
+                <span class="glyphicon glyphicon-log-out" aria-hidden="true"> </span> Abmelden</button>
+        </div>
+    </div>
+
+    <div ng-if="!$ctrl.isUserLoggedIn()">
+        <form name="loginForm" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' : loginForm.username.$invalid }">
+                <input type="text" name="username" class="form-control"  ng-model="$ctrl.username" placeholder="Benutzername" required>
+                <p ng-show="loginForm.username.$invalid && !loginForm.username.$pristine" class="help-block" ng-disabled="$ctrl.dataLoading">Bitte Benutzernamen eingeben.</p>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error' : loginForm.password.$invalid}">
+                <input type="password" name="password" class="form-control"  ng-model="$ctrl.password" placeholder="Passwort" ng-minlength="8" ng-disabled="$ctrl.dataLoading" required>
+                <p ng-show="loginForm.password.$error.required && !loginForm.password.$pristine" class="help-block">Bitte Passwort eingeben.</p>
+                <p ng-show="loginForm.password.$error.minlength && !loginForm.password.$error.required" class="help-block">Das Passwort muss min. 8 Zeichen lang sein.</p>
+            </div>
+            <div ng-if="$ctrl.errorMessage">
+                <span class="help-block" name="errorMessage" aria-hidden="true">Fehler: {{$ctrl.errorMessage}}</span>
+            </div>
+            <div align="right">
+                <button type="submit" class="btn btn-primary"  ng-click="$ctrl.onLogin()" ng-disabled="$ctrl.dataLoading || loginForm.$invalid">
+                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"> </span> {{$ctrl.dataLoading == true ? 'Bitte warten...' : 'Anmelden' }}</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,1 @@
+{"version":2,"workflowIds":[0,1],"workflowsById":{"0":{"id":0,"name":"Test Workflow","workspaceXml":"<xml><block type=\"task_group\" deletable=\"false\" movable=\"true\"></block></xml>"},"1":{"id":1,"name":"New Workflow","workspaceXml":"<xml><block type=\"task_group\" deletable=\"false\" movable=\"true\"></block></xml>"}},"workflowNameToId":{"Test Workflow":0,"New Workflow":1}}

@@ -1,0 +1,36 @@
+{
+  "name": "rehagoal-webapp",
+  "private": true,
+  "devDependencies": {},
+  "dependencies": {
+    "angular": "1.8.2",
+    "angular-route": "1.8.2",
+    "angular-loader": "1.8.2",
+    "angular-mocks": "1.8.2",
+    "angular-animate": "1.8.2",
+    "html5-boilerplate": "^5.3.0",
+    "google-blockly": "b8059c4bc8",
+    "google-closure-library": "f68f494fd3",
+    "angular-webstorage": "^0.14.0",
+    "angular-xeditable": "^0.10.2",
+    "ng-file-upload": "https://github.com/RehaGoal/ng-file-upload.git#64ffea0d5eeeb163442a01a6f5c94c1fe56bc78f",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.0",
+    "angular-bootstrap": "^2.5.0",
+    "ngCordova": "^0.1.27-alpha",
+    "angular-scroll-glue": "^2.1.0",
+    "angular-bootstrap-lightbox": "^0.12.0",
+    "restangular": "^1.6.1",
+    "angular-qrcode": "^7.2.0",
+    "reflect-metadata": "0.1.10",
+    "dexie": "^2.0.2",
+    "sjcl": "^1.0.7",
+    "openpgp": "^4.10.5",
+    "angular-web-notification": "^2.0.1",
+    "jsonparse2": "https://github.com/RehaGoal/jsonparse2.git#6dd6029eb6f504de5de2ffe089678721bb36add4"
+  },
+  "resolutions": {
+    "angular": "1.8.2",
+    "angular-bootstrap": "^2.5.0"
+  }
+}

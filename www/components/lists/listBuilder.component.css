@@ -1,0 +1,16 @@
+list-builder .panel-footer {
+    background-color: #fff;
+    border: none;
+    margin: 0;
+    padding-top: 0;
+}
+
+list-builder .panel {
+    padding: 0;
+    margin-right: 1em;
+    min-height: 400px;
+}
+
+list-builder .list-group {
+    margin-bottom: 0.5em;
+}

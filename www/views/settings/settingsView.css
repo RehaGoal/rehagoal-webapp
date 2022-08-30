@@ -1,0 +1,24 @@
+settings-view > .container > div,
+settings-view > .container hr {
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+}
+
+settings-view .toggle-switch-wrapper {
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+    display: flex;
+    align-items: center;
+}
+
+settings-view .toggle-switch-wrapper > label {
+    margin-bottom: 0;
+}
+
+settings-view .toggle-switch-wrapper > label > small {
+    color: grey;
+}
+
+settings-view toggle-switch + label {
+    margin-left: 0.5em;
+}

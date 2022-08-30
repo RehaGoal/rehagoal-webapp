@@ -1,0 +1,24 @@
+<div class="execution-block-parallel-flex">
+    <div ng-click="$ctrl.onClickTitle()" class="execution-block-flex-bottom execution-block-title panel-body tasklabel label label-primary"
+        style="">
+        <div class="execution-block-text" ng-class="$ctrl.contentAlign == 'left' ? 'text-left-side' : 'text-right-side'">
+            {{ $ctrl.numTasksTodo }} von {{ $ctrl.numTasksRemain}}: {{ $ctrl.text }}
+        </div>
+        <!--<div align="center" ng-show="$ctrl.image">
+            <img ng-click="$ctrl.openLightbox()" ng-src="{{$ctrl.image}}" class="execution-block-image img-thumbnail">
+        </div>-->
+    </div>
+    <div style="flex: 1; max-height: calc(100vh - 162px); overflow: scroll" class="panel-body">
+        <ul style="padding-left: 0;" class="flex-container wrap">
+            <li class="flex-item flex-2col" style="flex-basis: 50%" ng-repeat="flow in $ctrl.flows">
+                <execution-block text="flow.getCurrent().getText()"
+                                 image-hash="flow.getCurrent().getImageHash()"
+                                 lightbox-disabled="true"
+                                 button-yes="false" button-no="false" button-check="true"
+                                 current="true" on-click-check="$ctrl.selectCheck(flow, flow.getCurrent())"
+                                 on-click-label="$ctrl.onClickMiniLabel(flow, flow.getCurrent())"
+                                 mini-task="true" current-block-index="$ctrl.currentBlockIndex"></execution-block>
+            </li>
+        </ul>
+    </div>
+</div>

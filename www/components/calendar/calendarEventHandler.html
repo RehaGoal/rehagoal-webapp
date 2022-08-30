@@ -1,0 +1,34 @@
+<div id="calendar-event-bar-overlay" ng-show="$ctrl.showEventBar">
+    <div class="panel panel-info">
+        <div class="panel-heading">{{$ctrl.activeEvents.length}} {{$ctrl.activeEvents.length === 1 ? "Anstehender Termin" : "Anstehende Termine"}}</div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="activeEvent in $ctrl.activeEvents | orderBy:'date' track by activeEvent.uuid">
+                    <div class="calendar-event-bar-row">
+                        <div class="calendar-event-bar-event-description">
+                            <div class="calendar-event-bar-workflow-name">
+                                <span class="label label-default">{{$ctrl.getTimeAsString(activeEvent.date)}}</span>
+                                {{$ctrl.getWorkflowName(activeEvent.workflowIDs[0])}}
+                            </div>
+                            <div style="margin-left: 5px;">
+                                <span class="badge">{{activeEvent.workflowIDs.length > 1 ? ("+" + (activeEvent.workflowIDs.length - 1)): ""}}</span>
+                            </div>
+                        </div>
+                        <div class="btn-group calendar-event-bar-button-group" role="group">
+                            <button ng-click="$ctrl.startCalendarEvent(activeEvent)" title="Starten" class="btn btn-success">
+                                <span class="glyphicon glyphicon-play"></span> <span>Starten</span>
+                            </button>
+                            <button ng-click="$ctrl.postponeCalendarEvent(activeEvent)" title="Später" class="btn btn-warning">
+                                <span class="glyphicon glyphicon-time"></span> <span>Später</span>
+                            </button>
+                            <button ng-click="$ctrl.cancelCalendarEvent(activeEvent)" title="Löschen" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-trash"></span> <span>Löschen</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

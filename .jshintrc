@@ -1,0 +1,38 @@
+{
+  "strict": true,
+  "globalstrict": true,
+  "esversion": 6,
+  "browser": true,
+  "globals": {
+    "console": false,
+
+    "angular": false,
+
+    "module": false,
+    "inject": false,
+
+    "jasmine": false,
+    "describe": false,
+    "beforeAll": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "afterAll": false,
+    "since": false,
+    "installPromiseMatchers": false,
+    "it": false,
+    "expect": false,
+    "spyOn": false,
+    "spyOnProperty": false,
+    "fail": false,
+
+    "browser": false,
+    "element": false,
+    "by": false,
+
+    "sjcl": false,
+
+    "self": false,
+
+    "rehagoal": true
+  }
+}

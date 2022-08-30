@@ -1,0 +1,8 @@
+<h3>Aufgaben-Verlauf</h3>
+<div id="task-list-execution" scroll-glue>
+    <ul>
+      <li ng-repeat="logEntry in $ctrl.executionLog track by $index" speak-contents>
+          {{logEntry}}
+      </li>
+    </ul>
+</div>

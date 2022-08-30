@@ -1,0 +1,44 @@
+gamification-settings-view {
+    --style-chooser-preview-size: 64px;
+}
+
+gamification-settings-view image-thumbnail-chooser {
+    --preview-size: var(--style-chooser-preview-size);
+}
+
+.points-settings-grid-container {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.right-buttons-grid {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-columns: auto min-content;
+    grid-template-rows: repeat(auto-fit, 2em);
+}
+
+.image-thumbnail-chooser-grid {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-columns: repeat(auto-fit, minmax(var(--style-chooser-preview-size), 1fr));
+    justify-items: center;
+    padding: 10px;
+    background-color: lightgray;
+}
+
+.image-thumbnail-chooser-grid > a {
+    width: var(--style-chooser-preview-size);
+    height: var(--style-chooser-preview-size);
+    margin-bottom: 0;
+}
+
+.force-flex-wrap {
+    flex-basis: 100%;
+}
+
+gamification-settings-view > .container hr {
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+}

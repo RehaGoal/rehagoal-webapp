@@ -1,0 +1,25 @@
+#dashboard-stats-content {
+    display: grid;
+    grid-template-rows: [top] min-content repeat(3, [content-row] min-content);
+    grid-template-columns: [left] min-content [middle] auto;
+    grid-gap: 1em;
+}
+
+gamification-dashboard-view > .container hr {
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+}
+
+gamification-dashboard-view .headline-settings-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+gamification-dashboard-view .gamification-progress {
+    border-style: solid;
+    border-width: 1px;
+    border-color: grey;
+    opacity: 100;
+}

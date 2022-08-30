@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html lang="en" ng-app="rehagoal" ng-strict-di class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html lang="en" ng-app="rehagoal" ng-strict-di class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html lang="en" ng-app="rehagoal" ng-strict-di class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><html lang="en" ng-app="rehagoal"  ng-strict-di class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>RehaGoal</title>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+    <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css">
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css">
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="components/execution/executionBlock.css">
+    <link rel="stylesheet" href="components/lists/listBuilder.component.css">
+    <link rel="stylesheet" href="components/calendar/calendarEventHandler.css">
+    <link rel="stylesheet" href="components/tts/speakContents.css">
+    <link rel="stylesheet" href="components/toggleSwitch/toggleSwitch.css">
+    <link rel="stylesheet" href="components/imageThumbnailChooser/imageThumbnailChooser.css">
+    <link rel="stylesheet" href="components/gamification/navbarGamification.component.css">
+    <link rel="stylesheet" href="views/flowEdit/flowEditView.css">
+    <link rel="stylesheet" href="views/execution/executionView.css">
+    <link rel="stylesheet" href="views/scheduling/schedulingView.css">
+    <link rel="stylesheet" href="views/contact_help/contact_help.css">
+    <link rel="stylesheet" href="views/planner/plannerView.css">
+    <link rel="stylesheet" href="views/settings/settingsView.css">
+    <link rel="stylesheet" href="views/gamification/gamificationDashboardView.css">
+    <link rel="stylesheet" href="views/gamification/gamificationSettingsView.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- window.Promise is needed for Typescript async/await to work.
+        Incluing promise-polyfill for IE and other old browsers that don't have window.Promise: -->
+    <!--<script src="../node_modules/promise-polyfill/promise.min.js"></script>-->
+</head>
+<body>
+<workflow-version-study-persist></workflow-version-study-persist>
+<calendar-event-handler></calendar-event-handler>
+<nav class="navbar navbar-fixed-top navbar-default">
+    <div class="container" ng-controller="navbarGamificationStatusController as navbarStatusCtrl">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#!/overview">RehaGoal</a>
+            <div id="index-navbar-container-xs" class="visible-xs" ng-if="navbarStatusCtrl.assertPointsDisplayWhenLoaded()">
+                <a href="#!gamification" data-toggle="collapse" data-target=".navbar-collapse.in">
+                    <navbar-gamification></navbar-gamification>
+                </a>
+            </div>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav" style="display: none" ng-style="{'display': 'revert'}">
+                <li><a href="#!/overview" data-toggle="collapse" data-target=".navbar-collapse.in">
+                    <span class="glyphicon glyphicon-home"></span>
+                    <span>Übersicht</span>
+                </a></li>
+                <li><a href="#!/planner" data-toggle="collapse" data-target=".navbar-collapse.in">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    <span>Terminplanung</span>
+                </a></li>
+                <li id="index-navbar-container-sm" class="visible-sm" ng-if="navbarStatusCtrl.assertPointsDisplayWhenLoaded()">
+                    <a href="#!gamification" data-toggle="collapse" data-target=".navbar-collapse.in">
+                        <navbar-gamification></navbar-gamification>
+                    </a>
+                </li>
+                <li><a href="#!/scheduling" data-toggle="collapse" data-target=".navbar-collapse.in">
+                    <span class="glyphicon glyphicon-list"></span>
+                    <span class="hidden-sm">Ablaufplanung</span>
+                </a></li>
+                <li id="index-navbar-container-md" class="visible-lg visible-md" ng-if="navbarStatusCtrl.assertPointsDisplayWhenLoaded()">
+                    <a href="#!gamification" data-toggle="collapse" data-target=".navbar-collapse.in">
+                        <navbar-gamification></navbar-gamification>
+                    </a>
+                </li>
+                </l>
+                <li><a id="help-btn" href="#!/help" data-toggle="collapse" data-target=".navbar-collapse.in">
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                    <span class="visible-xs-inline visible-lg-inline">Hilfe</span>
+                </a></li>
+                <li><a href="" data-toggle="collapse" data-target=".navbar-collapse.in" ng-controller="LoginModalController as loginModalCtrl" ng-click="loginModalCtrl.showLoginModal()">
+                    <span class="glyphicon glyphicon-user" ng-class="loginModalCtrl.isUserLoggedIn() ? ' text-primary' : 'text-muted'"></span>
+                    <span class="visible-xs-inline visible-lg-inline"> {{loginModalCtrl.isUserLoggedIn() ? 'Logout' : 'Login'}}</span>
+                </a></li>
+                <li><a href="#!/settings" data-toggle="collapse" data-target=".navbar-collapse.in">
+                    <span class="glyphicon glyphicon-cog"></span>
+                    <span class="visible-xs-inline  visible-lg-inline">Einstellungen</span>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<div ng-view></div>
+
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+<!--<script src="bower_components/ionic/js/ionic.js"></script>
+<script src="bower_components/ionic/js/ionic-angular.js"></script>-->
+<script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
+<!-- cordova script (this will be a 404 during development) -->
+<script src="cordova.js"></script>
+
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+
+<!--<script src="bower_components/angular-timer/dist/assets/js/angular-timer-bower.js"></script>
+<script src="bower_components/angular-timer/dist/assets/js/angular-timer-all.min.js"></script>-->
+<script src="bower_components/angular-webstorage/angular-webstorage.js"></script>
+<script src="bower_components/google-blockly/blockly_compressed.js"></script>
+<script src="bower_components/google-blockly/blocks_compressed.js"></script>
+<script src="bower_components/google-blockly/javascript_compressed.js"></script>
+<script src="bower_components/google-blockly/msg/js/de.js"></script>
+<script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+<script src="bower_components/angular-scroll-glue/src/scrollglue.js"></script>
+<script src="bower_components/qrcode-generator/js/qrcode.js"></script>
+<script src="bower_components/qrcode-generator/js/qrcode_UTF8.js"></script>
+<script src="bower_components/angular-qrcode/angular-qrcode.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.js"></script>
+<script src="bower_components/simple-web-notification/web-notification.js"></script>
+<script src="bower_components/angular-web-notification/angular-web-notification.js"></script>
+<script src="bower_components/lodash/lodash.js"></script>
+<script src="bower_components/restangular/src/restangular.js"></script>
+<script src="bower_components/reflect-metadata/Reflect.js"></script>
+<script src="bower_components/dexie/dist/dexie.js"></script>
+<script src="bower_components/sjcl/sjcl.js"></script>
+<script src="bower_components/openpgp/dist/openpgp.js"></script>
+<script src="bower_components/jsonparse2/dist/umd/index.js"></script>
+<script src="components/crypto/bytes.js"></script>
+<script src="app.js"></script>
+<script src="version.js"></script>
+<script src="components/utilities/utilities.module.js"></script>
+<script src="components/utilities/streamUtilities.js"></script>
+<script src="components/utilities/ngAnimateCallbacks/onAnimate.directive.js"></script>
+<script src="components/utilities/onLoad/onLoad.directive.js"></script>
+<script src="components/utilities/scrollIntoView/scrollIntoViewEvent.directive.js"></script>
+<script src="components/settings/settings.module.js"></script>
+<script src="components/settings/quotaUsageBar.component.js"></script>
+<script src="components/settings/settings.service.js"></script>
+<script src="components/blocklyConfig/blocklyConfig.module.js"></script>
+<script src="components/blocklyConfig/blockly.config.js"></script>
+<script src="components/blocklyConfig/blockly-blocks.run.js"></script>
+<script src="components/blocklyConfig/blockly.config.service.js"></script>
+<script src="components/blockly/blockly.module.js"></script>
+<script src="components/blockly/blockly.service.js"></script>
+<script src="components/blockly/blockly.directive.js"></script>
+<script src="components/blockly/blocklyImage.service.js"></script>
+<script src="components/blockly/ngBlockly.provider.js"></script>
+<script src="components/crypto/cryptoFunctions.js"></script>
+<script src="components/crypto/crypto.module.js"></script>
+<script src="components/crypto/pgpCrypto.service.js"></script>
+<script src="components/calendar/calendar.module.js"></script>
+<script src="components/calendar/calendar.service.js"></script>
+<script src="components/calendar/calendarScheduler.service.js"></script>
+<script src="components/calendar/calendarEventHandler.component.js"></script>
+<script src="components/clipboard/clipboard.module.js"></script>
+<script src="components/clipboard/blocklyClipboard.service.js"></script>
+<script src="components/database/database.module.js"></script>
+<script src="components/database/imagesDatabase.service.js"></script>
+<script src="components/database/metricsDatabase.service.js"></script>
+<script src="components/database/calendarDatabase.service.js"></script>
+<script src="components/database/clipboardDatabase.service.js"></script>
+<script src="components/database/gamificationDatabase.service.js"></script>
+<script src="components/database/workflowsDatabase.service.js"></script>
+<script src="components/gamification/gamification.module.js"></script>
+<script src="components/gamification/gamification.service.js"></script>
+<script src="components/gamification/gamificationSettings.service.js"></script>
+<script src="components/gamification/navbarGamification.component.js"></script>
+<script src="components/gamification/navbarGamificationStatusController.js"></script>
+<script src="components/modal/leaveModal.module.js"></script>
+<script src="components/modal/leaveModal.component.js"></script>
+<script src="components/modal/infoModal.module.js"></script>
+<script src="components/modal/infoModal.component.js"></script>
+<script src="components/modal/loginModal.module.js"></script>
+<script src="components/modal/loginModal.controller.js"></script>
+<script src="components/modal/promptModal.module.js"></script>
+<script src="components/modal/promptModal.component.js"></script>
+<script src="components/lists/listBuilder.component.js"></script>
+<script src="components/lists/changeOrder.directive.js"></script>
+<script src="components/images/images.module.js"></script>
+<script src="components/images/images.service.js"></script>
+<script src="components/intents/intents.module.js"></script>
+<script src="components/intents/intent.service.js"></script>
+<script src="components/intents/intent_import.service.js"></script>
+<script src="components/restClient/restClient.run.js"></script>
+<script src="components/restClient/restClient.config.js"></script>
+<script src="components/tts/mespeak/mespeak.module.js"></script>
+<script src="components/tts/mespeak/mespeak.service.js"></script>
+<script src="components/tts/tts.module.js"></script>
+<script src="components/tts/tts.services.module.js"></script>
+<script src="components/tts/tts.service.js"></script>
+<script src="components/tts/speakContents.directive.js"></script>
+<script src="components/workflow/workflow.module.js"></script>
+<script src="components/workflow/workflow_builder.iface.js"></script>
+<script src="components/workflow/workflow_execution.iface.js"></script>
+<script src="components/workflow/workflow.service.js"></script>
+<script src="components/workflow/workflow_execution.service.js"></script>
+<script src="components/workflow/workflow_execution_builder.service.js"></script>
+<script src="components/workflow/workflow_version_study_persist.controller.js"></script>
+<script src="components/metrics/metric.module.js"></script>
+<script src="components/metrics/metrics.run.js"></script>
+<script src="components/metrics/metric.factory.js"></script>
+<script src="components/metrics/metricRegistry.factory.js"></script>
+<script src="components/metrics/metric.service.js"></script>
+<script src="components/metrics/metricIdGenerator.service.js"></script>
+<script src="components/authentication/auth.module.js"></script>
+<script src="components/authentication/auth.service.js"></script>
+<script src="views/flowEdit/flowEditView.js"></script>
+<script src="views/execution/executionView.js"></script>
+<script src="views/execution/executionComponent.js"></script>
+<script src="views/overview/overviewView.js"></script>
+<script src="views/planner/plannerView.js"></script>
+<script src="views/scheduling/schedulingView.js"></script>
+<script src="views/contact_help/contactView.js"></script>
+<script src="views/contact_help/helpView.js"></script>
+<script src="views/contact_help/gallery-help.js"></script>
+<script src="views/settings/settingsView.js"></script>
+<script src="views/gamification/gamificationDashboardView.js"></script>
+<script src="views/gamification/gamificationSettingsView.js"></script>
+<script src="components/overview/overviewToolbar.js"></script>
+<script src="components/overview/workflowMenuStrip.js"></script>
+<script src="components/overview/serverExportButton.js"></script>
+<script src="components/progress/progress.component.js"></script>
+<script src="components/execution/executionBlock.component.js"></script>
+<script src="components/execution/executionBlockParallel.component.js"></script>
+<script src="components/execution/executionLog.component.js"></script>
+<script src="components/execution/executionTimer.service.js"></script>
+<script src="components/execution/executionCountdown.service.js"></script>
+<script src="components/execution/cordovaWakeuptimer.service.js"></script>
+<script src="components/smartCompanion/wearDataApi.js"></script>
+<script src="components/smartCompanion/smartCompanion.js"></script>
+<script src="components/smartCompanion/smartCompanion.module.js"></script>
+<script src="components/smartCompanion/smartCompanion.service.js"></script>
+<script src="components/smartCompanion/wearCompanion.service.js"></script>
+<script src="components/smartCompanion/bluetoothCompanion.service.js"></script>
+<script src="components/exchange/exchange.module.js"></script>
+<script src="components/exchange/workflowExport.service.js"></script>
+<script src="components/exchange/workflowImport.service.js"></script>
+<script src="components/exchange/importJob.factory.js"></script>
+<script src="components/exchange/download.service.js"></script>
+<script src="components/exchange/studyExport.service.js"></script>
+<script src="components/exchange/restWorkflowExchange.service.js"></script>
+<script src="components/toggleSwitch/toggleSwitch.module.js"></script>
+<script src="components/toggleSwitch/toggleSwitch.component.js"></script>
+<script src="components/imageThumbnailChooser/imageThumbnailChooser.module.js"></script>
+<script src="components/imageThumbnailChooser/imageThumbnailChooser.component.js"></script>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

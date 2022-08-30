@@ -1,0 +1,7 @@
+<div ng-if="$ctrl.supported">
+    <progress ng-value="$ctrl.usage" max="{{$ctrl.quota}}"></progress><br />
+    <small>{{$ctrl.usage | bytes2}} / {{$ctrl.quota | bytes2}}</small>
+</div>
+<div ng-if="!$ctrl.supported">
+    Die Speicherplatz-Berechnung wird von Ihrem Browser nicht unterstützt.
+</div>

@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title"><span class="glyphicon glyphicon-paperclip"></span> {{$ctrl.title}}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <p>{{$ctrl.message}}</p>
+    <ul>
+        <li ng-repeat="missedEvent in $ctrl.missedEvents | orderBy: 'date'">
+            {{missedEvent.date.toLocaleString()}}: {{$ctrl.getWorkflowNames(missedEvent.workflowIDs).join(", ")}}
+        </li>
+    </ul>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="$ctrl.onConfirm()">OK</button>
+</div>

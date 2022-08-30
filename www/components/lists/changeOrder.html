@@ -1,0 +1,10 @@
+<div>
+    <div ng-if="!swapOrder">
+        <div ng-transclude="element1"></div>
+        <div ng-transclude="element2"></div>
+    </div>
+    <div ng-if="swapOrder">
+        <div ng-transclude="element2"></div>
+        <div ng-transclude="element1"></div>
+    </div>
+</div>

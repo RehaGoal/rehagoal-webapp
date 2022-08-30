@@ -1,0 +1,64 @@
+<a class="btn btn-sm btn-primary pull-left" title="Starten" href="#!/start/{{$ctrl.workflow.id}}">
+    <span class="glyphicon glyphicon-play visible-xs-inline visible-sm-inline visible-md-inline"></span>
+    <span class="visible-lg-inline visible-xl-inline">Starten</span>
+</a>
+<div class="pull-left visible-md">
+    <a class="btn btn-sm btn-default" title="Bearbeiten"
+       href="#!/edit/{{$ctrl.workflow.id}}"><span class="glyphicon glyphicon-wrench"></span></a>
+    <button type="button" title="Umbenennen" class="btn btn-sm btn-default"
+            ng-click="$ctrl.renameBtnForm.$show()"><span class="glyphicon glyphicon-pencil"></span>
+    </button>
+    <button type="button" title="Duplizieren" class="btn btn-sm btn-default"
+            ng-click="$ctrl.overviewCtrl.duplicateWorkflow($ctrl.workflow.id)">
+        <span class="glyphicon glyphicon-duplicate"></span>
+    </button>
+    <button type="button" title="Löschen" class="btn btn-sm btn-danger"
+            ng-click="$ctrl.overviewCtrl.deleteWorkflow($ctrl.workflow.id)">
+        <span class="glyphicon glyphicon-trash"></span>
+    </button>
+</div>
+<div class="pull-left visible-lg visible-xl">
+    <a class="btn btn-sm btn-default" title="Bearbeiten"
+       href="#!/edit/{{$ctrl.workflow.id}}">Bearbeiten</a>
+    <button type="button" title="Umbenennen" class="btn btn-sm btn-default"
+            ng-click="$ctrl.renameBtnForm.$show()">Umbenennen
+    </button>
+    <button type="button" title="Duplizieren" class="btn btn-sm btn-default"
+            ng-click="$ctrl.overviewCtrl.duplicateWorkflow($ctrl.workflow.id)">
+        Duplizieren
+    </button>
+    <button type="button" title="Löschen" class="btn btn-sm btn-danger"
+            ng-click="$ctrl.overviewCtrl.deleteWorkflow($ctrl.workflow.id)">
+        Löschen
+    </button>
+</div>
+<div class="dropdown pull-left visible-xs visible-sm">
+    <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdown-workflow{{$index}}"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <span class="glyphicon glyphicon-option-vertical"></span>
+    </button>
+    <ul class="dropdown-menu" style="min-width: 0" aria-labelledby="dropdown-workflow{{$index}}">
+        <li><a title="Bearbeiten" href="#!/edit/{{$ctrl.workflow.id}}">
+            <span class="glyphicon glyphicon-wrench"></span>
+        </a>
+        </li>
+
+        <li>
+            <a title="Umbenennen" ng-click="$ctrl.renameBtnForm.$show()">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+        </li>
+
+        <li>
+            <a title="Duplizieren" ng-click="$ctrl.overviewCtrl.duplicateWorkflow($ctrl.workflow.id)">
+                <span class="glyphicon glyphicon-duplicate"></span>
+            </a>
+        </li>
+
+        <li>
+            <a title="Löschen" ng-click="$ctrl.overviewCtrl.deleteWorkflow($ctrl.workflow.id)">
+                <span class="glyphicon glyphicon-trash"></span>
+            </a>
+        </li>
+    </ul>
+</div>

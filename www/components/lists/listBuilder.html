@@ -1,0 +1,37 @@
+<change-order swap-order="$ctrl.allItemsFirst">
+    <element1>
+        <!-- selected items are listed on here ... -->
+        <div class="panel panel-primary col-md-5">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{$ctrl.selectedItemsTitle}}</h3>
+            </div>
+            <div class="panel-body pre-scrollable">
+                <div class="list-group" ng-repeat="item in $ctrl.selectedItems track by $index">
+                    <button type="button" class="list-group-item" ng-click="$ctrl.removeItemAt($index)">
+                        <b>{{$index + 1}}. </b><ng-transclude ng-transclude-slot="itemDisplay"></ng-transclude>
+                    </button>
+                </div>
+
+                <div ng-if="$ctrl.noItemsSelectedWarning && $ctrl.selectedItems.length === 0" class="alert alert-warning" role="alert">
+                    {{$ctrl.noItemsSelectedWarning}}
+                </div>
+            </div>
+            <div class="panel-footer" ng-transclude="selectedItemsFooter">
+            </div>
+        </div>
+    </element1>
+
+    <element2>
+        <!-- all available items are listed here ... -->
+        <div class="panel panel-primary col-md-5">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{$ctrl.allItemsTitle}}</h3>
+            </div>
+            <div class="panel-body pre-scrollable">
+                <div class="list-group" ng-repeat="item in $ctrl.allItems | orderBy:$ctrl.allItemsOrderBy track by item.id">
+                    <button type="button" class="list-group-item" ng-click="$ctrl.addItem(item)" ng-transclude="itemDisplay"></button>
+                </div>
+            </div>
+        </div>
+    </element2>
+</change-order>
