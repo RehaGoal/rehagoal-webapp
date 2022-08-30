@@ -24,11 +24,15 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Set up JDK 8
+      uses: actions/setup-java@v3
+      with:
+        java-version: 8
+        distribution: 'adopt'
     - name: Install build/test dependencies
       run: |
-        curl https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo apt-key add - && sudo apt-add-repository -y 'https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/'
         sudo apt-get update
-        sudo apt-get install -y graphicsmagick xvfb moreutils adoptopenjdk-8-hotspot
+        sudo apt-get install -y graphicsmagick xvfb moreutils
         curl -LO https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         sudo apt-get install -y ./google-chrome-stable_current_amd64.deb && rm google-chrome-stable_current_amd64.deb
         npm install -g bower
