@@ -24,14 +24,14 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install build dependencies
       run: |
-        curl https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
-        apt-add-repository -y 'https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/'
-        apt-get update
-        apt-get install -y adoptopenjdk-8-hotspot graphicsmagick wine64 rename
+        curl https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo apt-key add -
+        sudo apt-add-repository -y 'https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/'
+        sudo apt-get update
+        sudo apt-get install -y adoptopenjdk-8-hotspot graphicsmagick wine64 rename
         curl -s "https://get.sdkman.io" | bash
         source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk install gradle
         npm install -g bower
-        echo '{ "allow_root": true, "interactive": false }' > /root/.bowerrc
+        echo '{ "allow_root": true, "interactive": false }' > $HOME/.bowerrc
         git config --global url.https://github.com/.insteadOf git://github.com/
     - name: Use Cordova ${{ matrix.cordova-version }}
       run: npm install -g "cordova@${{ matrix.cordova-version }}"
