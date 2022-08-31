@@ -4435,12 +4435,14 @@ describe('RehaGoal Webapp', function () {
             }
 
             function expectResizedAndWarningShowing(imgElement, image_testfile) {
+                browser.wait(EC.visibilityOf(getImageSizeWarningResizingEnabled()), 2000);
                 expect(getImageSizeWarningResizingEnabled().isDisplayed()).toBe(true);
                 expect(getImageSizeWarningResizingDisabled().isPresent()).toBe(false);
                 expectImageDimensionsToBe(imgElement, image_testfile.resizedDimensions);
             }
 
             function expectNotResizedAndWarningShowing(imgElement, image_testfile) {
+                browser.wait(EC.visibilityOf(getImageSizeWarningResizingDisabled()), 2000);
                 expect(getImageSizeWarningResizingEnabled().isPresent()).toBe(false);
                 expect(getImageSizeWarningResizingDisabled().isDisplayed()).toBe(true);
                 expectImageDimensionsToBe(imgElement, image_testfile.originalDimensions);
