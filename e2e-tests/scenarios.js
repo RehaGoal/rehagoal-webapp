@@ -9334,29 +9334,35 @@ describe('RehaGoal Webapp', function () {
         it("should switch to next image when pressing on next in lightbox", function () {
             $$('.img-thumbnail').first().click();
             var modal = getModal();
+            browser.wait(EC.visibilityOf(modal), 3000);
 
             var title1 = $$('#image-caption').first().getText();
-            modal.element(by.css('#btn-next')).click();
+            var btnNext = modal.element(by.css('#btn-next'));
+            browser.wait(EC.elementToBeClickable(btnNext), 2500);
+            btnNext.click();
 
             var title2 = $$('#image-caption').first().getText();
             expect(title1).not.toEqual(title2);
 
             modal.element(by.buttonText('×')).click();
-            browser.wait(EC.not(EC.presenceOf(modal)));
+            browser.wait(EC.not(EC.presenceOf(modal)), 3000);
         });
 
         it("should switch to next image when pressing on preview in lightbox", function () {
             $$('.img-thumbnail').first().click();
             var modal = getModal();
+            browser.wait(EC.visibilityOf(modal), 3000);
 
             var title1 = $$('#image-caption').first().getText();
-            modal.element(by.css('#btn-preview')).click();
+            var btnPreview = modal.element(by.css('#btn-preview'));
+            browser.wait(EC.elementToBeClickable(btnPreview), 2500);
+            btnPreview.click();
 
             var title2 = $$('#image-caption').first().getText();
             expect(title1).not.toEqual(title2);
 
             modal.element(by.buttonText('×')).click();
-            browser.wait(EC.not(EC.presenceOf(modal)));
+            browser.wait(EC.not(EC.presenceOf(modal)), 3000);
         });
     });
 
