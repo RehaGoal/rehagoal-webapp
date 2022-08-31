@@ -166,6 +166,8 @@ module rehagoal.blockly {
                         '429ec9f88c4881850fe1db245921bd00c3cdcf2e6f2a73b28e178c7d07b26d81',
                         // ci2
                         '1f5757004ea1b4e85e1dff189b5da3b2a16dd0360b2ad8db083c07b3b0cd327b',
+                        // GitHub ubuntu-20-04
+                        'acfde3cc6a9e6fd60d06c389868102daf547e1b186546ddae1c75eb61ccde3f6',
                     ];
                     await expectKnownBlobHash(allowedHashes, pngBlob, 'pngBlob');
                 });

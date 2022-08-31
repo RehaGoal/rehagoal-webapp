@@ -24,15 +24,19 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Set up JDK 8
+      uses: actions/setup-java@v3
+      with:
+        java-version: 8
+        distribution: 'adopt'
     - name: Install build/test dependencies
       run: |
-        curl https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add - && apt-add-repository -y 'https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/'
-        apt-get update
-        apt-get install -y graphicsmagick xvfb moreutils adoptopenjdk-8-hotspot
+        sudo apt-get update
+        sudo apt-get install -y graphicsmagick xvfb moreutils
         curl -LO https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        apt-get install -y ./google-chrome-stable_current_amd64.deb && rm google-chrome-stable_current_amd64.deb
+        sudo apt-get install -y ./google-chrome-stable_current_amd64.deb && rm google-chrome-stable_current_amd64.deb
         npm install -g bower
-        echo '{ "allow_root": true, "interactive": false }' > /root/.bowerrc
+        echo '{ "allow_root": true, "interactive": false }' > $HOME/.bowerrc
         git config --global url.https://github.com/.insteadOf git://github.com/
     - name: Install project dependencies
       run: npm ci --unsafe-perm
@@ -65,7 +69,8 @@ jobs:
         popd && timeout 10 bash -c 'while ! curl http://127.0.0.1:8080 2>/dev/null; do sleep 0.5; done'
         ps aux && curl -v 127.0.0.1:8080/api/v2/
         mkdir -p reports/
-        xvfb-run npm run protractor-coverage --unsafe-perm | tee >(ts -s "%H:%M:%.S" > reports/timed-protractor.log)
+        xvfb-run -s '-screen 0 1920x1080x24' npm run protractor-coverage --unsafe-perm | tee >(ts -s "%H:%M:%.S" > reports/timed-protractor.log)
+        exit ${PIPESTATUS[0]}
     - name: Archive E2E test artifacts
       uses: actions/upload-artifact@v3
       if: always()

@@ -4435,12 +4435,14 @@ describe('RehaGoal Webapp', function () {
             }
 
             function expectResizedAndWarningShowing(imgElement, image_testfile) {
+                browser.wait(EC.visibilityOf(getImageSizeWarningResizingEnabled()), 2000);
                 expect(getImageSizeWarningResizingEnabled().isDisplayed()).toBe(true);
                 expect(getImageSizeWarningResizingDisabled().isPresent()).toBe(false);
                 expectImageDimensionsToBe(imgElement, image_testfile.resizedDimensions);
             }
 
             function expectNotResizedAndWarningShowing(imgElement, image_testfile) {
+                browser.wait(EC.visibilityOf(getImageSizeWarningResizingDisabled()), 2000);
                 expect(getImageSizeWarningResizingEnabled().isPresent()).toBe(false);
                 expect(getImageSizeWarningResizingDisabled().isDisplayed()).toBe(true);
                 expectImageDimensionsToBe(imgElement, image_testfile.originalDimensions);
@@ -9334,29 +9336,35 @@ describe('RehaGoal Webapp', function () {
         it("should switch to next image when pressing on next in lightbox", function () {
             $$('.img-thumbnail').first().click();
             var modal = getModal();
+            browser.wait(EC.visibilityOf(modal), 3000);
 
             var title1 = $$('#image-caption').first().getText();
-            modal.element(by.css('#btn-next')).click();
+            var btnNext = modal.element(by.css('#btn-next'));
+            browser.wait(EC.elementToBeClickable(btnNext), 2500);
+            btnNext.click();
 
             var title2 = $$('#image-caption').first().getText();
             expect(title1).not.toEqual(title2);
 
             modal.element(by.buttonText('×')).click();
-            browser.wait(EC.not(EC.presenceOf(modal)));
+            browser.wait(EC.not(EC.presenceOf(modal)), 3000);
         });
 
         it("should switch to next image when pressing on preview in lightbox", function () {
             $$('.img-thumbnail').first().click();
             var modal = getModal();
+            browser.wait(EC.visibilityOf(modal), 3000);
 
             var title1 = $$('#image-caption').first().getText();
-            modal.element(by.css('#btn-preview')).click();
+            var btnPreview = modal.element(by.css('#btn-preview'));
+            browser.wait(EC.elementToBeClickable(btnPreview), 2500);
+            btnPreview.click();
 
             var title2 = $$('#image-caption').first().getText();
             expect(title1).not.toEqual(title2);
 
             modal.element(by.buttonText('×')).click();
-            browser.wait(EC.not(EC.presenceOf(modal)));
+            browser.wait(EC.not(EC.presenceOf(modal)), 3000);
         });
     });
 
